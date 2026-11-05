@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prácticas y Herramientas de Big Data · Semana 1</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@400;600&family=Overpass:wght@400;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="../assets/presentacion.css">
+  <script src="../assets/tema.js"></script>
+</head>
+<body data-curso="big-data" data-formato="clinica" data-bloque4="Los trabajos del curso">
+<div class="barra-lectura">
+  <a href="../index.html">Volver al curso</a>
+  <button type="button" class="boton" data-alternar-tema>Modo oscuro</button>
+</div>
+<main class="escenario">
+
+  <section class="diapositiva portada">
+    <div class="portada-panel">
+      <span>Semana</span>
+      <span class="semana-numero">1</span>
+      <span>de 7</span>
+    </div>
+    <div class="portada-texto">
+      <p class="curso">Prácticas y Herramientas de Big Data</p>
+      <h1>Ecosistema Big Data y herramientas de Python</h1>
+      <p class="objetivo">Entender quién guarda y quién procesa en el ecosistema Big Data, saber cuándo pandas ya no alcanza y elegir el dataset que usarás en todo el curso.</p>
+      <p class="fecha">Jueves 29 de octubre · 19:00</p>
+      <div class="recorrido-completo"></div>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Cómo funciona este curso</h2>
+    <ul class="ideas">
+      <li data-paso="1"><span><strong>Antes de cada sesión</strong>, repasa con el tutor de la semana (20–30 minutos con ChatGPT, Gemini o Claude). Al final te da un ticket de entrada con tu duda: envíalo en el formulario del curso hasta las 12:00 del día de la sesión.</span></li>
+      <li data-paso="2"><span><strong>En la sesión</strong> empezamos en punto con una pista para el Aprendizaje Práctico del domingo y resolvemos dudas en pantalla compartida. No se califica: vienes a ganar puntos en lo que sí se califica.</span></li>
+      <li data-paso="3"><span><strong>Si no puedes venir</strong>, la grabación queda disponible y el ejercicio individual está al final de cada presentación.</span></li>
+    </ul>
+    <p class="nota">Todo está en el sitio del curso: presentaciones, tutores, ejemplos y guías de los trabajos.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Plan de hoy</h2>
+    <ol class="plan">
+      <li data-bloque="1">Pista para el Aprendizaje Práctico, tres ideas y cómo guarda HDFS un archivo.</li>
+      <li data-bloque="2">Le pedimos a la IA el mismo cálculo en pandas, Polars y Dask, e interpretamos qué hace cada uno.</li>
+      <li data-bloque="3">Cada uno arma la ficha de su dataset candidato. La revisamos en pantalla compartida.</li>
+      <li data-bloque="4">Un dataset, tres trabajos: el recorrido del curso y el Aprendizaje Autónomo 1.</li>
+      <li data-bloque="5">Repaso del ecosistema y de las herramientas para el domingo, y cómo usar el tutor.</li>
+    </ol>
+  </section>
+
+  <!-- ============ BLOQUE 1 · PUENTE ============ -->
+
+  <section class="diapositiva bloque" data-bloque="1">
+    <span class="numero">1</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Para el Aprendizaje Práctico de este domingo</h2>
+    <p class="pista">Para cada pieza del ecosistema, pregúntate qué hace: ¿guarda, procesa o coordina? Ten clara cada V con su significado. Y en Python, distingue qué estructura se puede modificar y cuál no, cuál tiene una o dos dimensiones, y cómo se escribe exactamente cargar un archivo y elegir una columna.</p>
+    <p class="nota">Una pista, no la pregunta. El cuestionario vence el domingo 1 de noviembre.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Tres ideas para llevarse</h2>
+    <ul class="ideas">
+      <li data-paso="1"><span><strong>Big Data no es una herramienta ni un tamaño.</strong> Para Mayer-Schönberger y Cukier, es aprovechar datos a gran escala para descubrir patrones y decidir mejor. Se describe con las <mark>4V</mark>: cuánto hay (volumen), qué tan rápido llega (velocidad), de qué tipos es (variedad) y cuánto se puede confiar (veracidad).</span></li>
+      <li data-paso="2"><span><strong>Cuando una máquina no alcanza, se reparte.</strong> HDFS guarda bloques con copias en varios servidores; MapReduce y Spark llevan el cálculo a los datos. Quien lo usa ve el clúster como un solo sistema.</span></li>
+      <li data-paso="3"><span><strong>Cada herramienta de Python tiene su lugar.</strong> NumPy para arrays numéricos, pandas para tablas, y Polars, Dask o PySpark cuando los datos no caben o tardan.</span></li>
+    </ul>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Si vienes de Java: las estructuras de Python</h2>
+    <table class="tabla">
+      <thead><tr><th>Python</th><th>En Java</th><th>¿Se puede modificar?</th><th>Para qué</th></tr></thead>
+      <tbody>
+        <tr><td><code>list</code> · <code>[a, b]</code></td><td><code>ArrayList</code></td><td>sí</td><td>secuencias ordenadas</td></tr>
+        <tr><td><code>tuple</code> · <code>(a, b)</code></td><td><code>List.of(…)</code>, <code>record</code></td><td class="resultado">no</td><td>registros fijos, coordenadas</td></tr>
+        <tr><td><code>dict</code> · <code>{clave: valor}</code></td><td><code>HashMap</code></td><td>sí</td><td>buscar un valor por su clave</td></tr>
+        <tr><td><code>set</code> · <code>{a, b}</code></td><td><code>HashSet</code></td><td>sí</td><td>valores sin repetir</td></tr>
+        <tr><td><code>pd.Series</code> · <code>pd.DataFrame</code></td><td>una columna · una tabla</td><td>sí</td><td>datos con etiquetas, en 1 y 2 dimensiones</td></tr>
+      </tbody>
+    </table>
+    <p class="nota">Intentar cambiar un elemento de una tupla lanza <code>TypeError</code>. Pruébalo con <code>semana-01/ejemplos/estructuras.py</code>.</p>
+  </section>
+
+  <section class="diapositiva pregunta">
+    <p class="nota">Responde en el Forms del chat de la reunión</p>
+    <p class="enunciado">Guardamos un archivo de 300 MB en HDFS con la configuración por defecto: bloques de 128 MB y 3 copias de cada bloque. ¿Cuántas copias de bloques hay en el clúster?</p>
+    <ol class="opciones">
+      <li>3</li>
+      <li>6</li>
+      <li>9</li>
+      <li>Ninguna: 300 no es múltiplo de 128</li>
+    </ol>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Sigue el archivo dentro de HDFS</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.75fr 1fr">
+      <figure id="anim-hdfs"></figure>
+      <ol class="ideas compactas">
+        <li data-paso="1"><span>Bloques de 128 MB; el último ocupa solo 44 MB.</span></li>
+        <li data-paso="2"><span>3 copias de cada bloque, en DataNodes distintos: <mark>9 copias</mark>, 900 MB.</span></li>
+        <li data-paso="3"><span>El NameNode no guarda datos: anota dónde está cada copia.</span></li>
+        <li data-paso="4"><span>Si un DataNode falla, cada bloque conserva 2 copias.</span></li>
+        <li data-paso="5"><span>El NameNode ordena copias nuevas hasta volver a 3.</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ BLOQUE 2 · CASO EN VIVO ============ -->
+
+  <section class="diapositiva bloque" data-bloque="2">
+    <span class="numero">2</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Le pedimos a la IA el mismo cálculo en pandas, Polars y Dask, e interpretamos qué hace cada uno.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Le pedimos lo mismo de tres formas</h2>
+    <div class="dos-columnas">
+      <div>
+        <p>Le pedimos a la IA:</p>
+        <pre class="prompt">Tengo ventas.csv: 2 millones de filas con fecha, ciudad, categoría, cantidad y precio unitario. Calcula el total vendido por ciudad en Python de tres formas: con pandas, con Polars en modo lazy y con Dask.</pre>
+      </div>
+      <div>
+        <h3>Para interpretar su respuesta</h3>
+        <ul>
+          <li data-paso="1">¿Cuánta memoria necesita cada versión, y por qué?</li>
+          <li data-paso="2">¿En qué momento se leen de verdad los datos?</li>
+          <li data-paso="3">¿Cuál seguiría funcionando si el archivo no cupiera en la RAM?</li>
+        </ul>
+      </div>
+    </div>
+    <p class="nota">El archivo se genera con <code>semana-01/ejemplos/generar-ventas.py</code> (datos sintéticos, 70 MB).</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>pandas: primero carga todo, luego calcula</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.2fr 1fr">
+      <pre class="compacto"><code><span class="clave">df = pd.read_csv("ventas.csv")</span>
+print(df.shape)    <span class="comentario"># (2000000, 5)</span>
+df.memory_usage(deep=True).sum()
+
+df["total"] = (df["cantidad"]
+               * df["precio_unitario"])
+df.groupby("ciudad")["total"].sum()</code></pre>
+      <div>
+        <table class="tabla">
+          <thead><tr><th>ventas.csv</th><th>Tamaño</th></tr></thead>
+          <tbody>
+            <tr><td>En disco</td><td class="resultado">70 MB</td></tr>
+            <tr data-paso="1"><td>En memoria, pandas 2.2 (Colab)</td><td class="resultado">378 MB</td></tr>
+            <tr data-paso="1"><td>En memoria, pandas 3.0</td><td class="resultado">126 MB</td></tr>
+          </tbody>
+        </table>
+        <ul class="ideas compactas" style="margin-top: 1em">
+          <li data-paso="2"><span><code>read_csv</code> lee el archivo completo antes de hacer cualquier cálculo. Si no cabe en la RAM, falla.</span></li>
+          <li data-paso="3"><span>El texto es lo que más pesa: en pandas 2 cada valor de texto es un objeto de Python.</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="nota" data-paso="3">Regla práctica de Wes McKinney, creador de pandas: ten entre 5 y 10 veces el tamaño del archivo en RAM.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Polars <em>lazy</em>: primero planifica, luego lee</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1fr 1fr">
+      <pre class="compacto"><code>consulta = (
+<span class="clave">    pl.scan_csv("ventas.csv")  <span class="comentario"># no lee</span></span>
+    .with_columns(
+        (pl.col("cantidad")
+         * pl.col("precio_unitario"))
+        .alias("total"))
+    .group_by("ciudad")
+    .agg(pl.col("total").sum())
+)
+print(consulta.explain())  <span class="comentario"># el plan</span>
+<span class="clave">consulta.collect()         <span class="comentario"># ahora sí</span></span></code></pre>
+      <div>
+        <pre class="compacto" data-paso="1"><code>AGGREGATE … BY [col("ciudad")]
+  WITH_COLUMNS: … .alias("total")
+    Csv SCAN [ventas.csv]
+<span class="clave">    PROJECT 3/5 COLUMNS</span></code></pre>
+        <ul class="ideas compactas" style="margin-top: 1em">
+          <li data-paso="2"><span><code>explain()</code> muestra el plan antes de ejecutar: solo lee 3 de las 5 columnas, porque fecha y categoría no se usan.</span></li>
+          <li data-paso="3"><span>Al llamar a <code>collect()</code> lee y calcula en paralelo, con todos los núcleos: 0,5 s frente a 4 s de pandas en la misma computadora.</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="nota">Mismo resultado que pandas. Código completo: <code>semana-01/ejemplos/caso-polars.py</code>.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Dask: divide en particiones y reparte el trabajo</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.2fr 1fr">
+      <pre class="compacto"><code><span class="clave">ddf = dd.read_csv("ventas.csv",
+                  blocksize="16MB")</span>
+ddf.npartitions          <span class="comentario"># 4</span>
+
+ddf["total"] = (ddf["cantidad"]
+                * ddf["precio_unitario"])
+resumen = (ddf.groupby("ciudad")
+           ["total"].sum())
+print(resumen)           <span class="comentario"># valores: ...</span>
+<span class="clave">resumen.compute()        <span class="comentario"># ahora sí</span></span></code></pre>
+      <ul class="ideas compactas">
+        <li data-paso="1"><span>Divide el archivo en 4 particiones de unas 500 000 filas. Cada partición es un DataFrame de pandas.</span></li>
+        <li data-paso="2"><span>Hasta <code>compute()</code> solo arma un plan de tareas: por eso <code>print</code> muestra <code>...</code> en lugar de valores.</span></li>
+        <li data-paso="3"><span>No hace falta que todo el archivo quepa en memoria a la vez. Aquí no fue más rápido que pandas (4,3 s): su ventaja aparece con datos que no caben, o con varios núcleos o máquinas.</span></li>
+      </ul>
+    </div>
+    <p class="nota">Las particiones de Dask se parecen a los bloques de HDFS: cada pedazo se procesa por separado. Código: <code>semana-01/ejemplos/caso-dask.py</code>.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>El mismo cálculo, a escala de clúster: MapReduce</h2>
+    <table class="tabla">
+      <thead><tr><th>Fase</th><th>Dónde ocurre</th><th>Qué hace con el total por ciudad</th></tr></thead>
+      <tbody>
+        <tr data-paso="1"><td><strong>Map</strong></td><td>en cada nodo, sobre su bloque</td><td>de cada fila emite un par <code>(ciudad, cantidad × precio)</code></td></tr>
+        <tr data-paso="2"><td><strong>Shuffle</strong></td><td>por la red</td><td>agrupa los pares por clave: todos los de Quito van al mismo nodo</td></tr>
+        <tr data-paso="3"><td><strong>Reduce</strong></td><td>en el nodo de cada clave</td><td>suma los valores: <code>("Quito", 165 791 314)</code></td></tr>
+      </tbody>
+    </table>
+    <ul class="ideas compactas">
+      <li data-paso="4"><span>Google publicó MapReduce en 2004 y Hadoop lo implementó como código abierto. Entre una fase y otra, MapReduce escribe los resultados intermedios en disco.</span></li>
+      <li data-paso="5"><span>Spark los mantiene en memoria: por eso suele ser mucho más rápido, sobre todo cuando un algoritmo repite pasos. Además procesa lotes y flujos continuos, y se programa en Python (PySpark), Scala, Java, R o SQL.</span></li>
+    </ul>
+  </section>
+
+  <!-- ============ BLOQUE 3 · CLÍNICA ============ -->
+
+  <section class="diapositiva bloque" data-bloque="3">
+    <span class="numero">3</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Cada uno arma la ficha de su dataset candidato. La consigna queda en esta diapositiva y en el chat.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Consigna: la ficha de tu dataset</h2>
+    <ol class="plan">
+      <li><span class="min">0–5</span><span><strong>Elige un candidato</strong> en Kaggle, el repositorio de UCI o los datos abiertos del Ecuador. Si todavía no tienes uno, genera un archivo de práctica con <code>python generar-ventas.py 50000</code>.</span></li>
+      <li><span class="min">5–25</span><span><strong>Completa <code>ejemplos/ejercicio-ficha.py</code></strong> (en Colab, pégalo en una celda): carga, forma, tipos, faltantes, resumen numérico, tu variable categórica, dos numéricas y la memoria que ocupa.</span></li>
+      <li><span class="min">25–40</span><span><strong>Revisión en pantalla compartida</strong> con voluntarios: ¿este dataset sirve para los tres trabajos?</span></li>
+    </ol>
+    <div class="consigna-pie">
+      <p class="nota">¿Quieres que revisemos tu ficha en pantalla? Avísame por chat.</p>
+      <button class="temporizador" type="button" data-minutos="25" aria-label="Temporizador de la consigna"></button>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Revisamos tu ficha</h2>
+    <ul class="ideas">
+      <li><span>¿La variable categórica tiene pocas clases y suficientes filas en cada una? Míralo con <code>value_counts()</code>.</span></li>
+      <li><span>¿Las dos numéricas están relacionadas? Una correlación cercana a 0 no sirve para una regresión.</span></li>
+      <li><span>¿Cuántas veces el tamaño del archivo ocupa en memoria? ¿Te alcanza pandas?</span></li>
+      <li><span>¿Qué columnas tienen faltantes o tipos raros, como números leídos como texto?</span></li>
+    </ul>
+    <p class="nota">El archivo de práctica sirve para aprender, no para tus trabajos: su cantidad y su precio casi no están relacionados (correlación de 0,006).</p>
+  </section>
+
+  <!-- ============ BLOQUE 4 · LOS TRABAJOS DEL CURSO ============ -->
+
+  <section class="diapositiva bloque" data-bloque="4">
+    <span class="numero">4</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Un dataset, tres trabajos: el recorrido del curso y el Aprendizaje Autónomo 1.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Un dataset, tres trabajos</h2>
+    <ul class="cierre-lista">
+      <li data-paso="1"><span class="que">Aprendizaje Autónomo 1 · 15 nov</span><span>Exploras tu dataset con pandas: Series, DataFrames, carga del CSV y selección con <code>.loc</code> e <code>.iloc</code>.</span></li>
+      <li data-paso="2"><span class="que">Aprendizaje Autónomo 2 · 6 dic</span><span>Con el mismo dataset, clasificas tu variable categórica con KNN y predices una numérica con regresión lineal.</span></li>
+      <li data-paso="3"><span class="que">Evaluación en Contacto con el Docente · 13 dic</span><span>Juntas datos y predicciones, los cargas en MongoDB, los consultas y entregas los dos trabajos anteriores corregidos.</span></li>
+    </ul>
+    <p data-paso="4"><strong>Elige ahora un dataset con al menos una variable categórica de pocas clases y dos numéricas relacionadas. Cambiarlo después cuesta rehacer trabajo.</strong></p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Aprendizaje Autónomo 1</h2>
+    <div class="dos-columnas">
+      <div>
+        <h3>Qué entregas</h3>
+        <ul>
+          <li>Un <code>.zip</code> con el notebook (<code>.ipynb</code>) con todas las celdas ejecutadas.</li>
+          <li>Un PDF con el código comentado, capturas de cada paso y las 5 respuestas.</li>
+          <li>Responde con ejemplos de <strong>tu propio dataset</strong>, no con definiciones copiadas.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Aclaraciones al enunciado</h3>
+        <ul>
+          <li>Es <strong>individual</strong>.</li>
+          <li>Donde dice «un CSV de ejemplo», elige pensando en los tres trabajos.</li>
+          <li>Agrega <code>.describe()</code> a la exploración: se toma en cuenta al calificar.</li>
+          <li>Antes de entregar, <em>Reiniciar y ejecutar todo</em> sin errores.</li>
+          <li>Vence el <strong>domingo 15 de noviembre</strong>.</li>
+        </ul>
+        <p><a href="../ver.html?f=entregas/aa1.md">Guía completa y rúbrica</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Un detalle que se califica: Series o DataFrame</h2>
+    <div class="dos-columnas">
+      <pre><code><span class="linea-paso" data-paso="1">df["ciudad"]       <span class="comentario"># Series</span></span>
+<span class="linea-paso" data-paso="2">df[["ciudad"]]     <span class="comentario"># DataFrame</span></span>
+<span class="linea-paso" data-paso="3">df[["ciudad", "cantidad"]]</span>
+<span class="linea-paso" data-paso="4">df.loc[df["cantidad"] &gt; 5, "ciudad"]</span>
+<span class="linea-paso" data-paso="5">df.iloc[0:3, 0:2]</span></code></pre>
+      <ul class="ideas compactas">
+        <li data-paso="1"><span>Un nombre entre corchetes devuelve una <strong>Series</strong>: una dimensión, con su índice.</span></li>
+        <li data-paso="2"><span>Una lista de nombres devuelve un <strong>DataFrame</strong>, aunque tenga una sola columna.</span></li>
+        <li data-paso="3"><span>Varias columnas: también una lista.</span></li>
+        <li data-paso="4"><span><code>.loc</code> elige por etiquetas y condiciones.</span></li>
+        <li data-paso="5"><span><code>.iloc</code> elige por posición: filas 0 a 2 y columnas 0 y 1 (el final no se incluye).</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ BLOQUE 5 · CIERRE ============ -->
+
+  <section class="diapositiva bloque" data-bloque="5">
+    <span class="numero">5</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Repaso para el domingo y cómo usar el tutor.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Las 4V, con ejemplos</h2>
+    <table class="tabla">
+      <thead><tr><th>V</th><th>Qué describe</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Volumen</strong></td><td>cuántos datos hay</td><td>años de ventas de una cadena de supermercados</td></tr>
+        <tr><td><strong>Velocidad</strong></td><td>qué tan rápido se generan y hay que procesarlos</td><td>pagos con tarjeta, segundo a segundo</td></tr>
+        <tr><td><strong>Variedad</strong></td><td>qué tipos y formatos llegan</td><td>tablas, JSON, fotos, reseñas en texto</td></tr>
+        <tr><td><strong>Veracidad</strong></td><td>cuánto se puede confiar en los datos</td><td>duplicados, sensores descalibrados, encuestas mal llenadas</td></tr>
+      </tbody>
+    </table>
+    <p class="nota">Doug Laney propuso en 2001 las tres primeras; la veracidad se sumó después. Algunos autores agregan valor y variabilidad.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>El ecosistema: quién hace qué</h2>
+    <table class="tabla">
+      <thead><tr><th>Pieza</th><th>Qué hace</th><th>Guarda, procesa o coordina</th></tr></thead>
+      <tbody>
+        <tr><td>Hadoop</td><td>marco de código abierto: HDFS + YARN + MapReduce</td><td>las tres cosas</td></tr>
+        <tr><td>HDFS</td><td>sistema de archivos repartido en bloques con copias</td><td class="resultado">guarda</td></tr>
+        <tr><td>NameNode</td><td>sabe qué bloques forman cada archivo y dónde están</td><td class="resultado">coordina</td></tr>
+        <tr><td>DataNode</td><td>guarda los bloques y avisa que sigue vivo</td><td class="resultado">guarda</td></tr>
+        <tr><td>YARN</td><td>reparte memoria y procesador entre los trabajos</td><td class="resultado">coordina</td></tr>
+        <tr><td>MapReduce</td><td>map, shuffle y reduce, con escritura en disco</td><td class="resultado">procesa</td></tr>
+        <tr><td>Spark</td><td>procesa en memoria, en lotes y en flujo continuo</td><td class="resultado">procesa</td></tr>
+      </tbody>
+    </table>
+    <p class="nota">Por qué no basta un servidor más grande: los datos crecen más rápido de lo que se puede ampliar una sola máquina. Es más barato sumar máquinas.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Herramientas de Python: cuál para qué</h2>
+    <table class="tabla">
+      <thead><tr><th>Herramienta</th><th>Para qué</th><th>Cómo trabaja</th></tr></thead>
+      <tbody>
+        <tr><td>NumPy</td><td>arrays y matrices numéricas</td><td>operaciones vectorizadas, escritas en C</td></tr>
+        <tr><td>pandas</td><td>tablas: Series y DataFrame</td><td>todo en memoria y de inmediato</td></tr>
+        <tr><td>Polars</td><td>tablas grandes en una computadora</td><td>escrito en Rust, en paralelo, con modo <em>lazy</em></td></tr>
+        <tr><td>Dask</td><td>lo que no cabe en memoria</td><td>particiones de pandas y plan de tareas</td></tr>
+        <tr><td>Modin</td><td>acelerar código pandas sin reescribirlo</td><td><code>import modin.pandas as pd</code>, en paralelo</td></tr>
+        <tr><td>Vaex</td><td>explorar miles de millones de filas</td><td>lee del disco sin cargar todo; hoy con poco mantenimiento</td></tr>
+        <tr><td>PySpark</td><td>clústeres</td><td>Spark desde Python (semana 7)</td></tr>
+      </tbody>
+    </table>
+    <p class="nota">Para graficar: Matplotlib, y Seaborn, que se construye sobre Matplotlib. Python domina en datos por su sintaxis sencilla, sus bibliotecas y su cercanía con la IA, pero no es el único: Spark también se programa en Scala, Java, R y SQL.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Cómo usar el tutor</h2>
+    <ol>
+      <li>Abre el sitio del curso y pulsa <strong>Copiar tutor</strong> en la semana que corresponde.</li>
+      <li>Pégalo completo en ChatGPT, Gemini o Claude (sirve la versión gratuita).</li>
+      <li>Conversa 20–30 minutos. Te hará preguntas y no te dará respuestas: está hecho para que pienses.</li>
+      <li>Al final, envía tu ticket de entrada en el <a href="https://forms.cloud.microsoft/r/JaPVYC1zKA">formulario de tickets</a> hasta las 12:00 del día de la sesión. El enlace también está en el tutor, el anuncio y el sitio del curso.</li>
+    </ol>
+    <p class="nota">Si tienes poco tiempo, escribe RÁPIDO al empezar: irá directo a las preguntas de control.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Antes de irnos</h2>
+    <ul class="cierre-lista">
+      <li><span class="que">Este domingo, 1 nov</span><span>Aprendizaje Práctico de la semana 1.</span></li>
+      <li><span class="que">Tu dataset</span><span>Elígelo ya: el Aprendizaje Autónomo 1 vence el 15 de noviembre.</span></li>
+      <li><span class="que">Si ves la grabación</span><span>Completa la ficha de tu dataset con <code>ejemplos/ejercicio-ficha.py</code> y anota cuántas veces el tamaño del archivo ocupa en memoria. Luego agrega a <code>caso-polars.py</code> un filtro para una sola categoría y explica qué cambió en <code>explain()</code>.</span></li>
+      <li><span class="que">Próxima semana</span><span>Comprensión y calidad de los datos (ISO 25012), el jueves 5 de noviembre. Antes, usa el <a href="../ver.html?f=semana-02/tutor.md">tutor de la semana 2</a>.</span></li>
+    </ul>
+  </section>
+
+</main>
+<script src="anim-hdfs.js"></script>
+<script src="../assets/presentacion.js"></script>
+</body>
+</html>

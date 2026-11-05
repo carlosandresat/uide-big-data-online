@@ -1,0 +1,20 @@
+# Material privado del docente: no se publica
+CLAUDE.md
+privado/
+
+# Sistema y herramientas
+.DS_Store
+Thumbs.db
+desktop.ini
+.ipynb_checkpoints/
+__pycache__/
+.claude/
+
+# Datos generados por los ejemplos (se recrean con generar-ventas.py)
+ventas.csv
+
+# Salidas del ETL de la semana 6 (se recrean con caso-etl.py)
+semana-06/ejemplos/salida/
+
+# Salida de particiones.py de la semana 7
+semana-07/ejemplos/ventas-particionadas/
