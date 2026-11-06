@@ -1,0 +1,313 @@
+id_cliente,ciudad,edad,nivel_educativo,ingreso_mensual,compras_anio,premium,ficha_actualizada
+C1053,Guayaquil,,bachillerato,618.78,3,no,2026-01-14
+C1151,Quito,18.0,básica,333.54,2,no,2024-10-27
+C1060,Guayaquil,,tercer nivel,1159.2,1,no,2025-11-16
+C1077,Loja,28.0,bachillerato,992.42,7,sí,2026-02-09
+C1266,Guayaquil,57.0,posgrado,,6,no,2026-08-01
+C1049,Guayaquil,,tercer nivel,1240.77,4,no,2026-11-07
+C1012,Guayaquil,42.0,bachillerato,653.5,7,no,2026-04-08
+C1238,Guayaquil,43.0,tercer nivel,1641.24,6,sí,2016-08-09
+C1097,Loja,63.0,tercer nivel,933.72,4,no,2025-12-19
+C1052,Guayaquil,28.0,básica,764.71,4,no,2022-02-18
+C1166,Loja,55.0,bachillerato,901.48,7,no,2025-08-08
+C1258,Loja,32.0,bachillerato,769.09,8,no,2026-12-20
+C1016,Guayaquil,39.0,bachillerato,430.34,6,no,2025-06-24
+C1061,Quito,33.0,bachillerato,789.68,4,no,2025-08-22
+C1214,Quito,59.0,bachillerato,725.3,5,no,2026-10-01
+C1070,Guayaquil,41.0,bachillerato,755.66,3,no,2023-10-12
+C1244,Quito,23.0,tercer nivel,1382.12,6,no,2025-01-19
+C1115,Quito,71.0,básica,484.54,6,no,2026-02-27
+C1130,Loja,66.0,tercer nivel,1480.99,7,no,2025-09-09
+C1123,Quito,57.0,tercer nivel,1286.6,3,sí,2023-06-24
+C1095,Guayaquil,40.0,tercer nivel,832.99,7,no,2025-04-21
+C1102,Guayaquil,45.0,bachillerato,539.14,1,no,2025-11-05
+C1083,Quito,41.0,básica,664.61,5,no,2025-01-02
+C1226,Guayaquil,69.0,posgrado,2453.97,5,no,2024-11-08
+C1139,Guayaquil,34.0,bachillerato,767.41,3,no,2025-10-22
+C1261,Guayaquil,48.0,bachillerato,871.76,5,no,2026-08-10
+C1041,Quito,61.0,posgrado,,4,no,2026-03-11
+C1202,Quito,69.0,tercer nivel,,6,no,2026-02-07
+C1088,Guayaquil,47.0,tercer nivel,1117.99,6,sí,2026-08-17
+C1274,Guayaquil,73.0,bachillerato,710.19,8,no,2021-08-23
+C1199,Guayaquil,59.0,bachillerato,735.76,7,no,2022-03-17
+C1155,Quito,39.0,básica,341.02,7,no,2026-09-19
+C1288,Guayaquil,51.0,bachillerato,872.4,7,no,2026-07-03
+C1158,QUITO,75.0,bachillerato,1058.67,4,no,2024-11-28
+C1011,Loja,47.0,tercer nivel,1497.71,10,no,2023-05-13
+C1204,Cuenca,71.0,básica,707.11,5,no,2021-05-13
+C1277,Quito,75.0,básica,578.4,6,no,2025-05-04
+C1085,Guayaquil,31.0,bachillerato,750.6,4,no,2026-06-16
+C1144,LOJA,41.0,bachillerato,1056.5,3,no,2026-06-07
+C1219,Quito,40.0,básica,396.97,5,no,2023-08-25
+C1136,Cuenca,52.0,tercer nivel,1185.95,9,sí,2026-05-18
+C1039,Quito,21.0,posgrado,2260.94,3,no,2026-12-23
+C1099,Guayaquil,25.0,tercer nivel,1531.75,9,no,2023-07-12
+C1285,Cuenca,59.0,tercer nivel,1497.83,7,no,2026-04-18
+C1255,Cuenca,59.0,tercer nivel,1262.46,7,no,2021-11-10
+C1208,Loja,57.0,bachillerato,682.34,6,no,2026-07-20
+C1002,Guayaquil,27.0,básica,380.71,3,no,2026-05-23
+C1114,Quito,74.0,bachillerato,735.02,4,no,2025-08-04
+C1113,Quito,71.0,tercer nivel,1494.32,5,no,2022-03-18
+C1069,Quito,74.0,bachillerato,736.05,6,no,2025-05-25
+C1241,Loja,68.0,tercer nivel,1429.45,7,no,2025-08-22
+C1197,Quito,60.0,bachillerato,737.39,4,no,2025-11-06
+C1164,Guayaquil,61.0,bachillerato,,7,no,2023-06-25
+C1188,Guayaquil,34.0,tercer nivel,841.37,8,no,2026-06-07
+C1217,Loja,48.0,tercer nivel,1130.97,6,no,2020-01-21
+C1014,Guayaquil,19.0,tercer nivel,1771.42,3,no,2026-08-25
+C1086,guayaquil,62.0,bachillerato,906.96,7,no,2023-06-02
+C1025,Guayaquil,64.0,tercer nivel,1598.55,7,no,2024-10-26
+C1290,Guayaquil,54.0,bachillerato,763.31,3,no,2026-08-28
+C1170,Quito,63.0,bachillerato,709.07,5,no,2021-06-09
+C1220,Guayaquil,57.0,tercer nivel,1311.61,4,no,2025-01-25
+C1203,Cuenca,19.0,bachillerato,462.91,10,no,2023-04-02
+C1279,Guayaquil,33.0,tercer nivel,1558.9,6,no,2024-06-11
+C1207,Quito,45.0,,508.87,6,no,2025-02-23
+C1232,Cuenca,72.0,bachillerato,631.91,7,no,2025-02-18
+C1206,Quito,66.0,bachillerato,,7,no,2019-04-11
+C1022,Guayaquil,72.0,bachillerato,601.48,3,no,2023-08-03
+C1062,Guayaquil,24.0,tercer nivel,,7,sí,2025-01-02
+C1256,Guayaquil,22.0,tercer nivel,1919.43,9,sí,2024-06-18
+C1157,Guayaquil,22.0,tercer nivel,1381.35,9,no,2024-12-23
+C1098,Quito,46.0,tercer nivel,1797.7,6,no,2020-09-06
+C1054,Guayaquil,56.0,básica,381.9,2,no,2026-12-08
+C1179,Quito,71.0,tercer nivel,1138.03,7,no,2024-02-08
+C1066,Quito,22.0,tercer nivel,1734.08,6,no,2026-11-17
+C1268,Cuenca,34.0,tercer nivel,984.34,1,no,2023-08-28
+C1259,Guayaquil,48.0,bachillerato,773.52,5,no,2025-08-02
+C1116,Quito,19.0,tercer nivel,1067.25,4,no,2020-05-27
+C1044,Quito,62.0,tercer nivel,1324.4,7,no,2021-12-13
+C1234,Guayaquil,19.0,tercer nivel,1114.7,2,no,2021-05-17
+C1286,Cuenca,26.0,básica,617.96,9,no,2020-02-24
+C1101,Quito,65.0,bachillerato,436.98,6,no,2017-06-04
+C1143,Guayaquil,65.0,bachillerato,464.93,9,no,2026-01-13
+C1291,guayaquil,48.0,tercer nivel,1868.5,4,no,2024-01-08
+C1037,Guayaquil,34.0,bachillerato,,11,no,2026-03-14
+C1184,Quito,41.0,básica,319.17,8,no,2026-08-21
+C1146,Quito,28.0,tercer nivel,1419.13,2,no,2025-01-25
+C1003,Guayaquil,61.0,bachillerato,575.48,4,no,2024-07-11
+C1055,guayaquil,62.0,tercer nivel,1920.77,11,sí,2025-01-04
+C1211,Guayaquil,,bachillerato,635.63,3,no,2026-09-09
+C1026,QUITO,38.0,bachillerato,381.53,6,no,2025-03-05
+C1216,Quito,75.0,bachillerato,779.55,9,no,2026-11-28
+C1128,Guayaquil,28.0,posgrado,3142.63,6,sí,2024-05-12
+C1284,Loja,32.0,bachillerato,961.4,8,no,2025-09-17
+C1051,Guayaquil,59.0,tercer nivel,1269.47,9,no,2026-11-13
+C1036,Guayaquil,38.0,tercer nivel,1033.66,9,no,2023-12-28
+C1112,Guayaquil,71.0,posgrado,2313.54,6,no,2022-11-01
+C1013,Cuenca,70.0,,1369.48,11,no,2026-01-18
+C1126,Guayaquil,22.0,bachillerato,1099.18,6,no,2025-11-05
+C1205,Cuenca,73.0,bachillerato,1436.09,2,no,2024-04-25
+C1150,Loja,33.0,posgrado,3507.46,5,no,2025-05-24
+C1135,Guayaquil,71.0,básica,800.38,3,sí,2019-03-01
+C1137,Cuenca,73.0,bachillerato,592.5,10,no,2023-09-11
+C1028,Guayaquil,64.0,tercer nivel,1430.96,7,no,2023-01-08
+C1250,Loja,61.0,tercer nivel,1042.07,6,no,2024-10-24
+C1173,Loja,67.0,tercer nivel,1808.44,9,no,2025-04-03
+C1175,Quito,43.0,tercer nivel,1553.48,3,no,2017-08-06
+C1239,Guayaquil,23.0,tercer nivel,1171.69,5,sí,2026-06-08
+C1021,Guayaquil,70.0,tercer nivel,1928.92,5,no,2025-07-02
+C1009,Quito,65.0,básica,514.25,8,no,2016-11-28
+C1204,Cuenca,71.0,básica,707.11,5,no,2021-05-13
+C1221,Guayaquil,22.0,posgrado,2143.75,7,sí,2025-07-15
+C1020,Guayaquil,28.0,tercer nivel,1478.46,4,no,2018-03-07
+C1237,Guayaquil,58.0,básica,620.73,4,no,2026-10-12
+C1045,Guayaquil,66.0,bachillerato,619.41,10,no,2025-03-14
+C1103,Guayaquil,71.0,básica,500.77,5,no,2025-07-03
+C1276,Quito,40.0,bachillerato,842.95,12,no,2026-06-20
+C1029,Quito,67.0,tercer nivel,2175.34,9,no,2022-09-13
+C1024,Guayaquil,53.0,bachillerato,822.0,4,no,2022-10-24
+C1273,Cuenca,34.0,tercer nivel,1079.74,7,no,2026-05-21
+C1057,Guayaquil,230.0,bachillerato,1112.38,4,no,2025-04-17
+C1134,Quito,47.0,básica,828.23,8,no,2026-08-14
+C1260,Loja,60.0,tercer nivel,1412.57,4,no,2024-10-17
+C1153,Quito,39.0,tercer nivel,964.25,4,no,2025-12-20
+C1193,Guayaquil,62.0,tercer nivel,876.16,9,no,2025-01-06
+C1174,Loja,19.0,bachillerato,671.88,4,no,2026-01-19
+C1033,Guayaquil,44.0,tercer nivel,1494.08,10,no,2026-06-24
+C1254,Guayaquil,41.0,tercer nivel,1907.43,3,no,2018-03-03
+C1154,Guayaquil,56.0,bachillerato,933.31,7,no,2026-07-04
+C1122,Guayaquil,44.0,tercer nivel,1425.59,10,no,2026-07-25
+C1063,Quito,51.0,tercer nivel,1456.19,4,no,2023-02-23
+C1066,Quito,22.0,tercer nivel,1734.08,6,no,2026-11-17
+C1182,Cuenca,45.0,bachillerato,910.84,4,no,2018-08-15
+C1081,Guayaquil,64.0,bachillerato,707.75,13,no,2024-01-22
+C1165,Quito,62.0,básica,713.67,6,sí,2024-06-28
+C1000,Quito,63.0,tercer nivel,1124.97,7,sí,2024-03-28
+C1121,Loja,48.0,bachillerato,686.89,7,no,2022-09-27
+C1108,Guayaquil,48.0,básica,511.82,8,sí,2025-05-26
+C1201,Guayaquil,40.0,bachillerato,722.86,4,no,2025-07-09
+C1004,Guayaquil,47.0,bachillerato,966.52,5,no,2024-11-16
+C1281,Quito,65.0,básica,572.69,4,no,2026-12-07
+C1057,Guayaquil,230.0,bachillerato,1112.38,4,no,2025-04-17
+C1243,Guayaquil,55.0,básica,505.14,4,no,2026-07-16
+C1059,Cuenca,38.0,bachillerato,,6,no,2026-09-04
+C1283,Guayaquil,39.0,tercer nivel,1491.03,7,no,2025-03-16
+C1047,Quito,43.0,bachillerato,871.41,8,no,2024-01-25
+C1194,Gye,58.0,tercer nivel,1188.0,9,no,2025-09-28
+C1046,Guayaquil,36.0,bachillerato,1240.02,5,no,2026-09-03
+C1257,Loja,53.0,bachillerato,1086.02,9,no,2024-08-04
+C1120,Guayaquil,58.0,básica,441.08,5,no,2026-10-16
+C1030,QUITO,51.0,bachillerato,817.58,5,no,2026-12-24
+C1252,Quito,33.0,bachillerato,542.11,8,no,2021-07-12
+C1056,Gye,22.0,bachillerato,701.25,6,no,2017-12-04
+C1198,Quito,71.0,básica,500.39,6,no,2016-01-11
+C1169,Guayaquil,,bachillerato,838.91,5,no,2025-08-12
+C1186,Cuenca,55.0,básica,589.07,4,no,2026-06-18
+C1294,Cuenca,74.0,bachillerato,,4,sí,2026-09-11
+C1127,Cuenca,35.0,básica,611.39,7,no,2025-10-24
+C1180,Cuenca,,bachillerato,829.31,7,no,2026-10-08
+C1159,Cuenca,22.0,básica,408.4,7,no,2024-03-26
+C1042,Quito,57.0,básica,687.25,7,no,2024-02-02
+C1265,QUITO,54.0,bachillerato,715.52,8,no,2024-10-27
+C1210,Quito,28.0,bachillerato,662.98,6,no,2018-04-12
+C1076,Quito,52.0,tercer nivel,1678.14,7,no,2024-01-26
+C1183,LOJA,53.0,bachillerato,1100.2,4,no,2025-03-17
+C1271,LOJA,42.0,posgrado,1626.17,5,no,2024-02-18
+C1007,Quito,41.0,bachillerato,1278.13,4,no,2018-09-16
+C1073,Loja,59.0,bachillerato,898.27,4,no,2025-11-08
+C1289,Cuenca,54.0,bachillerato,758.98,10,no,2024-06-25
+C1280,Cuenca,27.0,tercer nivel,,6,no,2025-10-19
+C1189,Quito,61.0,básica,684.75,6,no,2017-12-01
+C1152,Guayaquil,44.0,bachillerato,622.05,10,no,2023-07-15
+C1032,Cuenca,26.0,bachillerato,,5,no,2021-03-17
+C1015,Cuenca,31.0,bachillerato,719.92,3,no,2022-08-19
+C1094,guayaquil,59.0,tercer nivel,1316.96,7,no,2017-01-18
+C1107,Cuenca,44.0,tercer nivel,1302.55,12,no,2026-11-16
+C1150,Loja,33.0,posgrado,3507.46,5,no,2025-05-24
+C1147,Guayaquil,51.0,bachillerato,759.58,5,no,2018-03-21
+C1078,Quito,44.0,bachillerato,1042.42,7,no,2024-11-25
+C1035,Loja,64.0,,665.65,15,no,2021-12-25
+C1172,Guayaquil,44.0,bachillerato,1029.43,5,no,2025-02-26
+C1017,Quito,52.0,bachillerato,662.2,7,no,2026-04-24
+C1087,Guayaquil,21.0,posgrado,2716.34,6,no,2024-10-05
+C1228,guayaquil,44.0,bachillerato,770.09,5,no,2024-09-18
+C1247,Quito,75.0,bachillerato,1155.18,6,sí,2026-08-14
+C1240,Cuenca,60.0,tercer nivel,1655.2,1,sí,2021-08-03
+C1235,Guayaquil,56.0,bachillerato,918.93,7,no,2023-04-19
+C1222,Gye,73.0,posgrado,1500.56,9,no,2026-08-11
+C1267,Quito,18.0,tercer nivel,857.06,6,no,2025-09-22
+C1297,Quito,48.0,bachillerato,514.06,7,no,2024-06-06
+C1262,Gye,22.0,bachillerato,528.44,3,no,2026-08-02
+C1117,Guayaquil,73.0,tercer nivel,1437.31,10,no,2026-09-11
+C1177,Quito,53.0,tercer nivel,1867.19,7,no,2021-05-21
+C1064,Loja,69.0,posgrado,1973.45,6,no,2026-11-06
+C1010,Loja,29.0,bachillerato,736.49,5,no,2025-10-26
+C1218,Guayaquil,43.0,bachillerato,817.4,5,no,2026-07-13
+C1287,Loja,23.0,tercer nivel,1007.27,2,no,2025-06-28
+C1272,Loja,23.0,tercer nivel,,8,no,2025-07-06
+C1093,Cuenca,71.0,bachillerato,1051.8,4,no,2026-04-20
+C1293,Guayaquil,66.0,bachillerato,660.27,8,no,2024-01-06
+C1296,Quito,35.0,tercer nivel,1764.34,9,sí,2026-05-15
+C1005,Cuenca,47.0,bachillerato,656.95,4,no,2020-09-25
+C1200,Cuenca,34.0,tercer nivel,1676.85,7,no,2025-07-01
+C1230,Quito,23.0,tercer nivel,706.5,9,no,2026-12-03
+C1251,Quito,64.0,básica,602.13,8,no,2025-01-16
+C1225,Quito,18.0,tercer nivel,1172.92,5,no,2022-01-05
+C1058,Quito,63.0,bachillerato,971.91,5,no,2025-09-21
+C1104,Cuenca,45.0,básica,333.21,6,sí,2026-12-08
+C1249,Quito,61.0,tercer nivel,795.76,9,no,2025-10-07
+C1006,Loja,67.0,tercer nivel,1128.9,6,no,2026-08-06
+C1212,Quito,69.0,posgrado,1350.78,6,no,2026-01-23
+C1195,Guayaquil,49.0,tercer nivel,1683.9,6,no,2023-12-26
+C1149,Quito,40.0,tercer nivel,1481.32,9,no,2026-12-16
+C1163,Cuenca,46.0,bachillerato,736.83,6,no,2025-01-02
+C1254,Guayaquil,41.0,tercer nivel,1907.43,3,no,2018-03-03
+C1074,Loja,18.0,posgrado,2620.21,5,no,2025-07-24
+C1229,Loja,19.0,posgrado,2076.55,7,sí,2025-06-28
+C1190,Quito,46.0,tercer nivel,1471.73,7,no,2024-05-02
+C1209,Cuenca,35.0,tercer nivel,1608.09,7,no,2024-01-16
+C1111,Quito,31.0,tercer nivel,839.83,4,no,2026-11-17
+C1292,Loja,32.0,posgrado,2035.5,4,no,2023-06-03
+C1106,Guayaquil,65.0,bachillerato,760.18,7,sí,2025-02-09
+C1148,Quito,61.0,tercer nivel,1705.81,5,no,2025-09-23
+C1295,Guayaquil,24.0,básica,482.96,7,no,2025-01-18
+C1213,Guayaquil,,bachillerato,828.77,10,no,2024-07-09
+C1278,Quito,57.0,bachillerato,881.38,6,no,2025-09-03
+C1065,Loja,68.0,bachillerato,763.61,3,no,2025-02-23
+C1185,Guayaquil,63.0,posgrado,2148.99,4,no,2026-12-03
+C1141,Guayaquil,75.0,bachillerato,572.74,6,sí,2025-07-04
+C1156,Cuenca,59.0,tercer nivel,2479.01,4,no,2021-04-21
+C1132,Cuenca,54.0,,668.58,3,no,2025-02-16
+C1100,Cuenca,22.0,bachillerato,803.49,8,sí,2025-03-13
+C1233,Gye,63.0,posgrado,2209.9,5,no,2016-01-14
+C1031,Cuenca,53.0,tercer nivel,1058.42,4,no,2023-09-16
+C1118,Quito,27.0,básica,281.74,3,no,2026-06-13
+C1119,Guayaquil,69.0,tercer nivel,1024.28,3,no,2023-11-19
+C1298,Guayaquil,42.0,posgrado,2449.08,9,no,2024-09-03
+C1167,Quito,52.0,tercer nivel,2209.9,3,no,2024-04-05
+C1038,LOJA,59.0,posgrado,2166.78,3,no,2023-08-19
+C1246,Guayaquil,38.0,bachillerato,714.91,6,no,2026-09-16
+C1237,Guayaquil,58.0,básica,620.73,4,no,2026-10-12
+C1270,Quito,58.0,tercer nivel,2316.81,9,no,2025-05-17
+C1082,Guayaquil,57.0,bachillerato,719.5,8,no,2024-06-09
+C1050,Guayaquil,39.0,básica,595.78,3,no,2025-04-12
+C1084,Quito,35.0,bachillerato,790.55,5,no,2025-12-11
+C1224,Guayaquil,,bachillerato,672.61,2,sí,2025-11-21
+C1019,Quito,54.0,básica,688.18,7,no,2023-10-14
+C1072,Cuenca,47.0,tercer nivel,1706.77,5,no,2024-01-25
+C1162,Quito,64.0,posgrado,1927.69,8,no,2023-05-17
+C1075,Guayaquil,58.0,básica,505.86,2,no,2026-02-07
+C1124,quito,55.0,bachillerato,810.91,5,no,2022-12-14
+C1105,quito,47.0,tercer nivel,1708.39,3,no,2026-11-21
+C1275,Guayaquil,57.0,,997.83,6,no,2025-11-26
+C1129,Guayaquil,75.0,tercer nivel,,4,no,2026-12-20
+C1249,Quito,61.0,tercer nivel,795.76,9,no,2025-10-07
+C1196,LOJA,73.0,tercer nivel,1483.05,5,no,2026-08-19
+C1008,Guayaquil,20.0,bachillerato,793.56,8,no,2017-01-07
+C1040,Guayaquil,30.0,posgrado,2012.89,6,no,2025-03-06
+C1264,Guayaquil,38.0,bachillerato,,3,no,2023-07-10
+C1110,Guayaquil,31.0,bachillerato,600.95,4,no,2024-05-09
+C1282,Quito,35.0,bachillerato,,3,no,2026-02-19
+C1048,Cuenca,53.0,bachillerato,727.23,5,no,2024-10-11
+C1018,Quito,30.0,básica,630.08,6,no,2026-08-05
+C1043,Cuenca,65.0,tercer nivel,1045.71,8,no,2024-08-27
+C1090,Loja,22.0,tercer nivel,1613.14,8,no,2025-03-20
+C1160,Guayaquil,38.0,tercer nivel,1417.91,4,no,2026-12-04
+C1114,Quito,74.0,bachillerato,735.02,4,no,2025-08-04
+C1068,Cuenca,22.0,posgrado,1887.77,9,no,2022-06-04
+C1215,Quito,51.0,posgrado,2168.24,2,no,2022-03-18
+C1131,Guayaquil,19.0,básica,366.59,5,no,2024-02-25
+C1001,Guayaquil,48.0,bachillerato,876.96,6,no,2026-03-11
+C1187,Quito,42.0,bachillerato,,3,no,2026-03-06
+C1227,Loja,71.0,posgrado,2078.53,8,no,2025-11-18
+C1178,Cuenca,41.0,bachillerato,618.75,10,no,2026-04-23
+C1181,Cuenca,22.0,bachillerato,1105.45,10,no,2023-07-09
+C1133,Loja,32.0,posgrado,,10,no,2026-12-15
+C1223,Guayaquil,74.0,tercer nivel,997.12,4,no,2025-01-06
+C1248,Quito,26.0,bachillerato,945.55,4,no,2025-11-07
+C1168,Quito,47.0,básica,319.7,4,no,2025-12-27
+C1263,Cuenca,55.0,tercer nivel,1301.97,6,no,2025-03-24
+C1142,Quito,55.0,tercer nivel,1683.0,4,no,2024-10-16
+C1245,Quito,72.0,bachillerato,1071.46,5,no,2026-04-10
+C1027,Guayaquil,57.0,bachillerato,974.98,8,no,2022-03-08
+C1138,Quito,36.0,bachillerato,656.64,7,no,2021-05-17
+C1089,LOJA,30.0,bachillerato,663.39,7,no,2024-02-17
+C1023,Quito,23.0,tercer nivel,1858.59,5,no,2016-09-28
+C1096,Guayaquil,75.0,bachillerato,639.27,7,no,2025-04-02
+C1079, Quito ,37.0,tercer nivel,1293.8,7,no,2026-08-01
+C1299,Cuenca,68.0,básica,276.07,2,sí,2022-05-01
+C1192,Guayaquil,29.0,tercer nivel,1821.29,8,no,2026-05-12
+C1242,Loja,49.0,,1036.26,3,no,2024-06-10
+C1171,Quito,64.0,tercer nivel,1927.14,3,no,2023-11-04
+C1067,Guayaquil,53.0,básica,725.64,2,no,2025-12-18
+C1145,Quito,63.0,bachillerato,768.01,10,no,2025-10-20
+C1177,Quito,53.0,tercer nivel,1867.19,7,no,2021-05-21
+C1081,Guayaquil,64.0,bachillerato,707.75,13,no,2024-01-22
+C1231,Quito,47.0,tercer nivel,1308.99,4,no,2021-06-18
+C1037,Guayaquil,34.0,bachillerato,,11,no,2026-03-14
+C1140,guayaquil,66.0,tercer nivel,1859.71,5,no,2023-07-11
+C1034,Quito,60.0,tercer nivel,1457.98,6,no,2026-09-11
+C1125,Quito,48.0,bachillerato,1065.01,5,sí,2024-09-15
+C1236,Quito,64.0,bachillerato,771.1,7,no,2026-07-27
+C1253,Loja,73.0,tercer nivel,1520.67,5,no,2026-03-03
+C1176,Cuenca,,tercer nivel,1768.56,10,no,2026-11-09
+C1092,Loja,34.0,tercer nivel,1281.09,5,no,2025-09-16
+C1109,Quito,70.0,tercer nivel,1064.57,8,no,2025-08-06
+C1280,Cuenca,27.0,tercer nivel,,6,no,2025-10-19
+C1071,Guayaquil,71.0,básica,,7,no,2021-12-11
+C1161,Guayaquil,33.0,tercer nivel,1578.01,4,no,2026-07-15
+C1269,Guayaquil,26.0,posgrado,2082.12,5,no,2025-08-13
+C1091,Quito,51.0,bachillerato,889.63,4,no,2026-09-09
+C1080,Quito,19.0,básica,567.46,6,no,2025-12-15
+C1191,Guayaquil,66.0,bachillerato,694.13,10,sí,2021-03-12

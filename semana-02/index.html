@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prácticas y Herramientas de Big Data · Semana 2</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@400;600&family=Overpass:wght@400;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="../assets/presentacion.css">
+  <script src="../assets/tema.js"></script>
+</head>
+<body data-curso="big-data" data-formato="clinica" data-bloque4="Distancias y dimensionalidad">
+<div class="barra-lectura">
+  <a href="../index.html">Volver al curso</a>
+  <button type="button" class="boton" data-alternar-tema>Modo oscuro</button>
+</div>
+<main class="escenario">
+
+  <section class="diapositiva portada">
+    <div class="portada-panel">
+      <span>Semana</span>
+      <span class="semana-numero">2</span>
+      <span>de 7</span>
+    </div>
+    <div class="portada-texto">
+      <p class="curso">Prácticas y Herramientas de Big Data</p>
+      <h1>Comprensión y calidad de los datos</h1>
+      <p class="objetivo">Reconocer qué tipo de dato es cada columna, diagnosticar los problemas de calidad de un dataset con ISO 25012 y decidir qué se gana y qué se pierde al limpiarlo.</p>
+      <p class="fecha">Jueves 5 de noviembre · 19:00</p>
+      <div class="recorrido-completo"></div>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Plan de hoy</h2>
+    <ol class="plan">
+      <li data-bloque="1">Pista para el Aprendizaje Práctico, tres ideas y qué tipo de atributo es cada columna.</li>
+      <li data-bloque="2">La IA limpia un dataset de clientes; medimos qué mejora y qué se pierde en cada paso.</li>
+      <li data-bloque="3">Cada uno diagnostica la calidad de su dataset. Lo revisamos en pantalla compartida.</li>
+      <li data-bloque="4">Quién se parece a quién: distancias con y sin escalar, y cómo reducir atributos.</li>
+      <li data-bloque="5">Repaso para el domingo, el Aprendizaje Autónomo 1 y el tutor de la semana 3.</li>
+    </ol>
+  </section>
+
+  <!-- ============ BLOQUE 1 · PUENTE ============ -->
+
+  <section class="diapositiva bloque" data-bloque="1">
+    <span class="numero">1</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Para el Aprendizaje Práctico de este domingo</h2>
+    <p class="pista">Para cada columna, pregúntate: ¿describe una cualidad o una cantidad?, ¿sus valores tienen orden?, ¿el cero significa «nada»? Y para cada defecto de un dataset, ponle su nombre exacto: repetido, faltante, mal escrito, desactualizado o, simplemente, de más. Ojo con los sinónimos de las dimensiones de calidad.</p>
+    <p class="nota">Una pista, no la pregunta. El cuestionario vence el domingo 8 de noviembre.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Tres ideas para llevarse</h2>
+    <ul class="ideas">
+      <li data-paso="1"><span><strong>Un dataset son objetos descritos por atributos.</strong> Cada fila es un objeto (un cliente) y cada columna, un atributo: una característica que lo describe. El tipo de atributo decide qué operaciones tienen sentido.</span></li>
+      <li data-paso="2"><span><strong>Calidad es que los datos sirvan para su propósito.</strong> La norma ISO/IEC 25012 la describe con características como <mark>exactitud, completitud, consistencia y actualidad</mark>.</span></li>
+      <li data-paso="3"><span><strong>Limpiar siempre cuesta algo.</strong> Borrar pierde filas; imputar inventa valores y achica la dispersión. Esa decisión la tomas tú, no la IA.</span></li>
+    </ul>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Qué tipo de atributo es cada columna</h2>
+    <table class="tabla">
+      <thead><tr><th>Familia</th><th>Tipo</th><th>Qué lo define</th><th>Ejemplos</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="3"><strong>Cualitativo</strong><br>(categórico)</td><td>Nominal</td><td>nombres sin orden</td><td>ciudad, color, código postal</td></tr>
+        <tr><td>Ordinal</td><td>categorías con orden, sin distancias medibles</td><td>talla S, M, L; nivel educativo</td></tr>
+        <tr><td>Binario</td><td>dos valores; <strong>asimétrico</strong> si uno importa más</td><td>simétrico: pago en efectivo o tarjeta; asimétrico: prueba positiva o negativa</td></tr>
+        <tr><td rowspan="2"><strong>Cuantitativo</strong><br>(numérico)</td><td>Discreto</td><td>se cuenta</td><td>compras al año, hijos</td></tr>
+        <tr><td>Continuo</td><td>se mide</td><td>ingreso, peso, tiempo</td></tr>
+        <tr data-paso="1"><td rowspan="2"><strong>Escala</strong><br>(numéricos)</td><td>Intervalo</td><td>restar tiene sentido; <strong>no hay cero absoluto</strong></td><td>°C, año calendario: 20 °C no es «el doble» de 10 °C</td></tr>
+        <tr data-paso="1"><td>Razón</td><td><strong>cero absoluto</strong>: también se puede dividir</td><td>ingreso, edad, kelvin: 2000 $ es el doble de 1000 $</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="diapositiva pregunta">
+    <p class="nota">Responde en el Forms del chat de la reunión</p>
+    <p class="enunciado">¿Cuál de estos atributos es de razón?</p>
+    <ol class="opciones">
+      <li>Temperatura en °C</li>
+      <li>Año de nacimiento</li>
+      <li>Talla de camiseta (S, M, L)</li>
+      <li>Ingreso mensual en dólares</li>
+    </ol>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Por qué el ingreso, y por qué no las otras</h2>
+    <ul class="ideas compactas">
+      <li data-paso="1"><span><strong>Ingreso mensual: de razón.</strong> 0 $ significa «nada de ingreso», así que 2000 $ es exactamente el doble de 1000 $.</span></li>
+      <li data-paso="2"><span><strong>Temperatura en °C: de intervalo.</strong> 0 °C no es «ausencia de temperatura»: es el punto de congelación del agua. En kelvin sí hay cero absoluto.</span></li>
+      <li data-paso="3"><span><strong>Año de nacimiento: de intervalo.</strong> El año 0 es una convención del calendario. Restar dos años sí tiene sentido; dividirlos, no.</span></li>
+      <li data-paso="4"><span><strong>Talla de camiseta: ordinal.</strong> S &lt; M &lt; L, pero no se puede decir cuánto más grande es L que M. Es cualitativa.</span></li>
+    </ul>
+    <p class="nota" data-paso="4">La edad, en cambio, sí es de razón: 0 años es el inicio y 40 años es el doble de 20.</p>
+  </section>
+
+  <!-- ============ BLOQUE 2 · CASO EN VIVO ============ -->
+
+  <section class="diapositiva bloque" data-bloque="2">
+    <span class="numero">2</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Le pedimos a la IA que limpie un dataset de clientes y medimos qué mejora y qué se pierde en cada paso.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Le pedimos a la IA una limpieza</h2>
+    <div class="dos-columnas">
+      <div>
+        <p>Le pedimos a la IA:</p>
+        <pre class="prompt">Tengo clientes.csv con 312 filas: id, ciudad, edad, nivel educativo, ingreso mensual, compras al año, si es premium y la fecha en que se actualizó la ficha. Límpialo para analizarlo: duplicados, faltantes y formatos. Dame el código en pandas.</pre>
+      </div>
+      <div>
+        <h3>Para interpretar su respuesta</h3>
+        <ul>
+          <li data-paso="1">¿Qué característica de calidad mejora cada paso?</li>
+          <li data-paso="2">¿Qué información se pierde o se inventa?</li>
+          <li data-paso="3">¿Qué problemas no vio?</li>
+        </ul>
+      </div>
+    </div>
+    <p class="nota">Datos sintéticos: <code>semana-02/ejemplos/generar-clientes.py</code> crea <code>clientes.csv</code>. El caso completo está en <code>caso-limpieza.py</code>.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Su propuesta, paso a paso</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.1fr 1.15fr">
+      <pre class="compacto" style="font-size: calc(var(--u) * 2.45)"><code><span class="linea-paso" data-paso="1">df = df.drop_duplicates()</span>
+<span class="linea-paso" data-paso="2">df["ciudad"] = (df["ciudad"]
+                .str.strip().str.title())</span>
+<span class="linea-paso" data-paso="3">df["edad"] = df["edad"].fillna(
+    df["edad"].median())</span>
+<span class="linea-paso" data-paso="4">df["ingreso_mensual"] = (
+    df["ingreso_mensual"].fillna(
+        df["ingreso_mensual"].mean()))</span>
+<span class="linea-paso" data-paso="5">df = df.dropna()</span></code></pre>
+      <table class="tabla">
+        <thead><tr><th>Paso</th><th>Filas</th><th>Faltantes</th><th>Ciudades</th><th>Desv. ingreso</th></tr></thead>
+        <tbody>
+          <tr><td>Original</td><td>312</td><td>35</td><td>10</td><td>571,5</td></tr>
+          <tr data-paso="1"><td>1 duplicados</td><td class="resultado">300</td><td>33</td><td>10</td><td>556,0</td></tr>
+          <tr data-paso="2"><td>2 ciudad</td><td>300</td><td>33</td><td class="resultado">5</td><td>556,0</td></tr>
+          <tr data-paso="3"><td>3 edad</td><td>300</td><td class="resultado">24</td><td>5</td><td>556,0</td></tr>
+          <tr data-paso="4"><td>4 ingreso</td><td>300</td><td class="resultado">6</td><td>5</td><td class="resultado">539,0</td></tr>
+          <tr data-paso="5"><td>5 dropna</td><td class="resultado">294</td><td class="resultado">0</td><td>5</td><td>541,9</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="nota">Desviación estándar del ingreso mensual, en dólares. Salida real de <code>caso-limpieza.py</code>.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Qué mejora y qué cuesta cada paso</h2>
+    <table class="tabla">
+      <thead><tr><th>Paso</th><th>Mejora</th><th>Qué se pierde o qué supone</th></tr></thead>
+      <tbody>
+        <tr data-paso="1"><td><code>drop_duplicates()</code></td><td>unicidad: quita 12 copias exactas</td><td>nada, si de verdad eran copias del mismo cliente</td></tr>
+        <tr data-paso="2"><td><code>strip</code> + <code>title</code></td><td>consistencia: de 10 escrituras a 5</td><td>«Gye» sigue separada de Guayaquil: hace falta una tabla de equivalencias</td></tr>
+        <tr data-paso="3"><td>imputar edad e ingreso</td><td>completitud: 27 valores menos sin dato</td><td>esos 27 valores son inventados; la desviación del ingreso baja de 556 a 539: los clientes parecen más parecidos de lo que son</td></tr>
+        <tr data-paso="4"><td><code>dropna()</code></td><td>completitud, a la fuerza</td><td>6 clientes enteros, por no tener su nivel educativo</td></tr>
+      </tbody>
+    </table>
+    <p class="nota" data-paso="4">Imputar evita perder filas e información, pero no es gratis. Una opción mejor para el ingreso: la mediana de su nivel educativo. Así la desviación queda en 554,9, casi la original.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Lo que la IA no vio</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1fr 1fr">
+      <ul class="ideas compactas">
+        <li data-paso="1"><span><strong>Una edad de 230 años.</strong> No falta ni está repetida: está mal. Es un problema de <mark>exactitud</mark>, y solo se ve con <code>describe()</code> o con reglas de rango.</span></li>
+        <li data-paso="2"><span><strong>24 fichas sin actualizar desde antes de 2021.</strong> Ingresos y ciudades que quizá ya cambiaron: datos obsoletos, un problema de <mark>actualidad</mark>.</span></li>
+        <li data-paso="3"><span><strong>«Gye».</strong> La misma ciudad con otra escritura: datos inconsistentes.</span></li>
+      </ul>
+      <table class="tabla" data-paso="4">
+        <thead><tr><th>ISO 25012</th><th>Otros textos dicen</th></tr></thead>
+        <tbody>
+          <tr><td>Exactitud</td><td>precisión</td></tr>
+          <tr><td>Completitud</td><td>integridad</td></tr>
+          <tr><td>Consistencia</td><td>coherencia</td></tr>
+          <tr><td>Actualidad</td><td>puntualidad</td></tr>
+          <tr><td>(no la nombra aparte)</td><td>unicidad</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="nota" data-paso="4">Mismo concepto, dos nombres. En la norma, «precisión» es otra característica: el nivel de detalle, por ejemplo cuántos decimales se guardan.</p>
+  </section>
+
+  <!-- ============ BLOQUE 3 · CLÍNICA ============ -->
+
+  <section class="diapositiva bloque" data-bloque="3">
+    <span class="numero">3</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Cada uno diagnostica la calidad de su dataset. La consigna queda en esta diapositiva y en el chat.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Consigna: el diagnóstico de tu dataset</h2>
+    <ol class="plan">
+      <li><span class="min">0–5</span><span><strong>Abre tu dataset</strong>, el que elegiste para el Aprendizaje Autónomo 1. Si aún no tienes uno, usa <code>clientes.csv</code>.</span></li>
+      <li><span class="min">5–25</span><span><strong>Completa <code>ejemplos/ejercicio-calidad.py</code></strong>: duplicados, faltantes, categorías mal escritas, valores imposibles, el tipo de cada atributo y una decisión de limpieza con lo que cuesta.</span></li>
+      <li><span class="min">25–40</span><span><strong>Revisión en pantalla compartida</strong> con voluntarios: ¿qué problema es el más grave y qué harías con él?</span></li>
+    </ol>
+    <div class="consigna-pie">
+      <p class="nota">¿Quieres que revisemos tu diagnóstico en pantalla? Avísame por chat.</p>
+      <button class="temporizador" type="button" data-minutos="20" aria-label="Temporizador de la consigna"></button>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Revisamos tu diagnóstico</h2>
+    <ul class="ideas">
+      <li><span>¿Cada problema tiene su nombre y su característica de calidad? Duplicados, faltantes, inconsistentes, inexactos, obsoletos.</span></li>
+      <li><span>¿Clasificaste bien los atributos? Un código postal es un número, pero es nominal: sumarlo no tiene sentido.</span></li>
+      <li><span>¿Tu decisión dice qué pierdes? Cuántas filas borras o cuánto cambia la desviación si imputas.</span></li>
+      <li><span>¿Tu variable categórica para el Aprendizaje Autónomo 2 está bien escrita? Una clase repetida con dos nombres arruina la clasificación.</span></li>
+    </ul>
+  </section>
+
+  <!-- ============ BLOQUE 4 · DISTANCIAS Y DIMENSIONALIDAD ============ -->
+
+  <section class="diapositiva bloque" data-bloque="4">
+    <span class="numero">4</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Quién se parece a quién: distancias con y sin escalar, similitud entre binarios y cómo reducir atributos.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>¿Quién se parece más a Ana?</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1fr 1.1fr">
+      <div>
+        <table class="tabla">
+          <thead><tr><th>Cliente</th><th>Edad</th><th>Ingreso</th></tr></thead>
+          <tbody>
+            <tr><td>Ana</td><td>25</td><td>1000 $</td></tr>
+            <tr><td>Beto</td><td>60</td><td>1050 $</td></tr>
+            <tr><td>Carla</td><td>27</td><td>1400 $</td></tr>
+          </tbody>
+        </table>
+        <p class="nota" style="margin-top: 1em">Euclidiana: <code>√(Δedad² + Δingreso²)</code>. Min-max: <code>(x − mín) / (máx − mín)</code>, con edad de 18 a 80 e ingreso de 400 a 4000 $.</p>
+      </div>
+      <table class="tabla">
+        <thead><tr><th>Distancia a Ana</th><th>Beto</th><th>Carla</th></tr></thead>
+        <tbody>
+          <tr data-paso="1"><td>Euclidiana, sin escalar</td><td class="resultado">61,0</td><td>400,0</td></tr>
+          <tr data-paso="1"><td>Manhattan, sin escalar</td><td class="resultado">85,0</td><td>402,0</td></tr>
+          <tr data-paso="2"><td>Euclidiana, con min-max</td><td>0,565</td><td class="resultado">0,116</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="ideas compactas">
+      <li data-paso="1"><span>Sin escalar gana Beto, aunque le lleva 35 años: los dólares se miden en cientos y aplastan a los años.</span></li>
+      <li data-paso="2"><span>Con cada atributo entre 0 y 1, Carla es la más parecida. KNN decide por distancias: por eso el Aprendizaje Autónomo 2 pide escalar.</span></li>
+    </ul>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Escalar cambia quién está cerca</h2>
+    <figure id="anim-escala">
+      <figcaption class="solo-lector">Sin escalar, la diferencia de ingreso domina y Beto parece el más cercano a Ana. Con min-max, cada atributo pesa lo mismo y la más cercana es Carla. <span data-paso="1"></span><span data-paso="2"></span><span data-paso="3"></span><span data-paso="4"></span><span data-paso="5"></span></figcaption>
+    </figure>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Binarios asimétricos: que nadie compre no los acerca</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1fr 1fr">
+      <div>
+        <p>Ana y Beto marcaron qué compraron de 10 productos (1 = compró):</p>
+        <pre class="compacto"><code>Ana:  1 0 0 0 0 0 0 0 1 0
+Beto: 0 1 0 0 0 0 0 0 0 1</code></pre>
+        <p class="nota" style="margin-top: 1em">No compartieron ni una compra, pero coinciden en 6 productos que ninguno compró.</p>
+      </div>
+      <table class="tabla">
+        <thead><tr><th>Medida</th><th>Cuenta los 0-0</th><th>Similitud</th></tr></thead>
+        <tbody>
+          <tr data-paso="1"><td>Coincidencia simple</td><td>sí</td><td class="resultado">0,6</td></tr>
+          <tr data-paso="2"><td>Jaccard</td><td>no</td><td class="resultado">0,0</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-paso="2">En un binario asimétrico, el valor que importa es el 1: comprar, dar positivo, cometer fraude. Jaccard solo mira los 1 y por eso dice, con razón, que no se parecen.</p>
+    <p class="nota">Código: <code>semana-02/ejemplos/distancias.py</code>.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Menos atributos, la misma información</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1fr 1fr">
+      <div data-paso="1">
+        <h3>Seleccionar: quedarse con algunas columnas</h3>
+        <p>La <strong>selección recursiva de características</strong> (RFE) entrena, descarta la columna menos útil y repite. En el dataset de vinos de scikit-learn, de 13 atributos químicos conserva 4: alcohol, flavonoides, intensidad de color y prolina.</p>
+      </div>
+      <div data-paso="2">
+        <h3>Extraer: crear columnas nuevas</h3>
+        <p>El <strong>análisis de componentes principales</strong> (PCA) combina todas las columnas en componentes que capturan la mayor varianza.</p>
+        <table class="tabla">
+          <thead><tr><th>Componentes</th><th>Varianza explicada</th></tr></thead>
+          <tbody>
+            <tr><td>2</td><td class="resultado">55 %</td></tr>
+            <tr><td>5</td><td class="resultado">80 %</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="nota" data-paso="2">Objetivo de las dos: reducir la dimensionalidad conservando la información relevante. Ambas necesitan los atributos escalados. Código: <code>semana-02/ejemplos/reduccion.py</code>.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Preprocesar no es analizar</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1fr 1fr">
+      <div>
+        <h3>Preprocesamiento: preparar los datos</h3>
+        <ul>
+          <li>quitar duplicados</li>
+          <li>imputar faltantes</li>
+          <li>normalizar o escalar</li>
+          <li>codificar categóricas (<em>one-hot</em>)</li>
+          <li>seleccionar o reducir atributos</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Análisis: usar los datos ya preparados</h3>
+        <ul>
+          <li>segmentar clientes en grupos</li>
+          <li>predecir una clase o un valor</li>
+          <li>buscar patrones de compra</li>
+        </ul>
+        <p class="nota" style="margin-top: 1em">El preprocesamiento va antes y sirve a cualquier análisis. La segmentación es un resultado, no una preparación.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BLOQUE 5 · CIERRE ============ -->
+
+  <section class="diapositiva bloque" data-bloque="5">
+    <span class="numero">5</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Repaso para el domingo, el Aprendizaje Autónomo 1 y el tutor de la semana 3.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Un nombre para cada defecto</h2>
+    <table class="tabla">
+      <thead><tr><th>Problema</th><th>Qué es</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Duplicados</strong></td><td>registros idénticos repetidos</td><td>el mismo cliente dos veces</td></tr>
+        <tr><td><strong>Faltantes</strong></td><td>celdas sin valor</td><td>ingreso vacío</td></tr>
+        <tr><td><strong>Inconsistentes</strong></td><td>el mismo valor con distinto formato o escritura</td><td>«Quito», «QUITO», «quito»</td></tr>
+        <tr><td><strong>Inexactos</strong></td><td>valores que no corresponden a la realidad</td><td>edad de 230 años</td></tr>
+        <tr><td><strong>Obsoletos</strong></td><td>ya no son actuales</td><td>dirección de hace 8 años</td></tr>
+        <tr><td><strong>Ambiguos</strong></td><td>admiten más de una lectura</td><td>«03/04/2026»: ¿marzo o abril?</td></tr>
+        <tr><td><strong>Oscuros</strong></td><td>se recopilan y guardan, pero nadie sabe que existen ni los usa</td><td>registros de un sensor que nadie consulta</td></tr>
+        <tr><td><strong>Sobrecarga</strong></td><td>acumular datos irrelevantes que estorban y consumen recursos</td><td>años de registros sin utilidad</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Tipos de conjuntos de datos</h2>
+    <table class="tabla">
+      <thead><tr><th>Tipo</th><th>Qué lo distingue</th><th>Ejemplo</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Registros</strong></td><td>tabla de filas con las mismas columnas</td><td>el CSV de tus trabajos</td></tr>
+        <tr><td><strong>Matriz dispersa</strong></td><td>casi todos sus valores son cero o están vacíos</td><td>clientes × productos: cada cliente compra 5 de 2000</td></tr>
+        <tr><td><strong>Grafos</strong></td><td>nodos unidos por aristas: lo importante son las relaciones</td><td>red de amigos, rutas entre ciudades</td></tr>
+        <tr><td><strong>Secuenciales</strong></td><td>el orden importa; muchas veces lo da una marca de tiempo</td><td>movimientos de una cuenta, lecturas de un sensor</td></tr>
+        <tr><td><strong>Espaciales</strong></td><td>atributos geográficos o de posición</td><td>coordenadas GPS, mapas de lluvia</td></tr>
+      </tbody>
+    </table>
+    <p class="nota">Las canastas de compra suelen guardarse como matrices dispersas: se anotan solo los productos que sí se compraron.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Cómo usar el tutor</h2>
+    <ol>
+      <li>Abre el sitio del curso y pulsa <strong>Copiar tutor</strong> en la semana 3. También puedes <a href="../ver.html?f=semana-03/tutor.md">abrirlo aquí</a>.</li>
+      <li>Pégalo completo en ChatGPT, Gemini o Claude (sirve la versión gratuita).</li>
+      <li>Conversa 20–30 minutos. Te hará preguntas y no te dará respuestas.</li>
+      <li>Al final, envía tu ticket de entrada en el <a href="https://forms.cloud.microsoft/r/JaPVYC1zKA">formulario de tickets</a> hasta las 12:00 del jueves 12 de noviembre.</li>
+    </ol>
+    <p class="nota">Si tienes poco tiempo, escribe RÁPIDO al empezar: irá directo a las preguntas de control.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Antes de irnos</h2>
+    <ul class="cierre-lista">
+      <li><span class="que">Este domingo, 8 nov</span><span>Aprendizaje Práctico de la semana 2.</span></li>
+      <li><span class="que">Aprendizaje Autónomo 1</span><span>Vence el domingo 15 de noviembre. En el párrafo que describe tu dataset, menciona los faltantes y problemas que encontraste hoy. <a href="../ver.html?f=entregas/aa1.md">Guía y rúbrica</a>.</span></li>
+      <li><span class="que">Si ves la grabación</span><span>Completa <code>ejemplos/ejercicio-calidad.py</code> con tu dataset y escribe el problema más grave, qué característica de calidad afecta y si borrarías o imputarías. Luego, en <code>caso-limpieza.py</code>, une «Gye» con Guayaquil e imputa el ingreso con la mediana de cada nivel educativo.</span></li>
+      <li><span class="que">Próxima semana</span><span>Clasificación y árboles de decisión, el jueves 12 de noviembre. Antes, usa el <a href="../ver.html?f=semana-03/tutor.md">tutor de la semana 3</a>.</span></li>
+    </ul>
+  </section>
+
+</main>
+<script src="../assets/presentacion.js"></script>
+<script src="anim-escala.js"></script>
+</body>
+</html>
