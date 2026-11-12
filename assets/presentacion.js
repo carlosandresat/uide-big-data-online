@@ -2,8 +2,8 @@
    Teclas: → / Espacio / AvPág avanza · ← / RePág retrocede · Inicio / Fin · F pantalla completa
            D modo claro/oscuro · P puntero rojo (en tema.js) · L modo lectura · T inicia o pausa el temporizador de la diapositiva
    Atributos:
-     <body data-curso="poo-go" data-formato="taller|clinica|debate" data-bloque4="Ejercicio aplicado">
-       (clínica: data-bloque4 nombra el bloque 4; debate: data-trabajo pone la explicación del trabajo en lugar de la pausa)
+     <body data-curso="poo-go" data-formato="taller|clinica|guiada|debate" data-bloque4="Ejercicio aplicado">
+       (clínica: data-bloque4 nombra el bloque 4; guiada: data-bloque2, 3 y 4 nombran los bloques centrales; debate: data-trabajo pone la explicación del trabajo en lugar de la pausa)
      <section class="diapositiva" data-bloque="3"> o data-bloque="salas1": número o id del bloque
        (si falta, hereda el de la anterior). En las portadas de bloque, .numero, h2 y .minutos vacíos se completan solos.
      data-paso="n" en cualquier elemento: aparece en el paso n de esa diapositiva
@@ -39,6 +39,16 @@
       { id: 'clinica', nombre: 'Clínica', ini: 30, fin: 70 },
       { pausa: true, ini: 70, fin: 75 },
       { id: 'aplicado', nombre: body.dataset.bloque4 || 'Ejercicio aplicado', ini: 75, fin: 105 },
+      { id: 'cierre', nombre: 'Cierre', ini: 105, fin: 120 },
+    ],
+    // Clase guiada (Big Data y Redes desde la semana 3): explicación ordenada intercalada con demostraciones.
+    // data-bloque2, data-bloque3 y data-bloque4 nombran los bloques centrales.
+    guiada: [
+      { id: 'puente', nombre: 'Puente', ini: 0, fin: 10 },
+      { id: 'explicacion', nombre: body.dataset.bloque2 || 'Explicación', ini: 10, fin: 40 },
+      { id: 'practica', nombre: body.dataset.bloque3 || 'Práctica guiada', ini: 40, fin: 70 },
+      { pausa: true, ini: 70, fin: 75 },
+      { id: 'aplicado', nombre: body.dataset.bloque4 || 'Explicación y práctica', ini: 75, fin: 105 },
       { id: 'cierre', nombre: 'Cierre', ini: 105, fin: 120 },
     ],
     // Debate en dos rondas. Con data-trabajo, la explicación del trabajo calificado reemplaza la pausa.

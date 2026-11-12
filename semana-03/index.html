@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prácticas y Herramientas de Big Data · Semana 3</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@400;600&family=Overpass:wght@400;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="../assets/presentacion.css">
+  <script src="../assets/tema.js"></script>
+</head>
+<body data-curso="big-data" data-formato="guiada" data-bloque2="Clasificación y árboles" data-bloque3="Colab: un árbol con vinos" data-bloque4="KNN y SVM en Colab">
+<div class="barra-lectura">
+  <a href="../index.html">Volver al curso</a>
+  <button type="button" class="boton" data-alternar-tema>Modo oscuro</button>
+</div>
+<main class="escenario">
+
+  <section class="diapositiva portada">
+    <div class="portada-panel">
+      <span>Semana</span>
+      <span class="semana-numero">3</span>
+      <span>de 7</span>
+    </div>
+    <div class="portada-texto">
+      <p class="curso">Prácticas y Herramientas de Big Data</p>
+      <h1>Clasificación: árboles de decisión, KNN y SVM</h1>
+      <p class="objetivo">Distinguir el aprendizaje supervisado del no supervisado, comprobar a mano lo que decide un árbol y saber cuándo conviene KNN o SVM, practicando en Colab con datos reales de vinos.</p>
+      <p class="fecha">Jueves 12 de noviembre · 19:00</p>
+      <div class="recorrido-completo"></div>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Plan de hoy</h2>
+    <ol class="plan">
+      <li data-bloque="1">Pista para el Aprendizaje Práctico y abrimos el notebook de hoy en Colab.</li>
+      <li data-bloque="2">Formas de aprender de los datos, cómo decide un árbol y cómo se mide la impureza, con cálculos a mano.</li>
+      <li data-bloque="3">La IA entrena un árbol con 1359 vinos; lo comprobamos y lo podamos en Colab.</li>
+      <li data-bloque="4">KNN y SVM: la teoría y los mismos vinos en Colab. Lo que pide el Aprendizaje Autónomo 2.</li>
+      <li data-bloque="5">Repaso de los conceptos de la semana, el Aprendizaje Autónomo 1 (vence el domingo) y el tutor de la semana 4.</li>
+    </ol>
+  </section>
+
+  <!-- ============ BLOQUE 1 · PUENTE ============ -->
+
+  <section class="diapositiva bloque" data-bloque="1">
+    <span class="numero">1</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Para el Aprendizaje Práctico de este domingo</h2>
+    <p class="pista">Asocia cada algoritmo con su idea central: el árbol divide para reducir la impureza, KNN vota entre vecinos, SVM busca el margen más ancho y K-Means agrupa sin etiquetas. Para cada uno, piensa qué lo hace sobreajustarse y cómo se evita.</p>
+    <p class="nota">Una pista, no la pregunta. El cuestionario vence el domingo 15 de noviembre, el mismo día que el Aprendizaje Autónomo 1. Hoy repasamos, en orden, todos los conceptos que necesitas.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Abre ya el notebook de hoy</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.3fr 1fr">
+      <ol class="plan">
+        <li><span class="min">1</span><span>Abre el enlace del chat o el botón de la derecha. Se abre en <strong>Google Colab</strong>, con tu cuenta de Google.</span></li>
+        <li><span class="min">2</span><span><strong>Archivo → Guardar una copia en Drive.</strong> Así puedes editarlo.</span></li>
+        <li><span class="min">3</span><span>Ejecuta la primera celda con <strong>Shift + Enter</strong>. Debe mostrar <code>(1599, 12)</code>.</span></li>
+      </ol>
+      <div>
+        <p><a class="boton" href="https://colab.research.google.com/github/carlosandresat/uide-big-data-online/blob/main/semana-03/ejemplos/clasificacion-vinos.ipynb">Abrir en Colab</a></p>
+        <p class="nota" style="margin-top: 1em">No hay que instalar nada: Colab ya trae pandas y scikit-learn. Lo usaremos en los bloques 3 y 4. El notebook también es el ejercicio para quien ve la grabación.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BLOQUE 2 · EXPLICACIÓN ============ -->
+
+  <section class="diapositiva bloque" data-bloque="2">
+    <span class="numero">2</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Formas de aprender de los datos, cómo decide un árbol y cómo se mide la impureza.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Formas de aprender de los datos</h2>
+    <table class="tabla">
+      <thead><tr><th>Tipo</th><th>Cómo aprende</th><th>Ejemplos</th></tr></thead>
+      <tbody>
+        <tr data-paso="1"><td><strong>Supervisado</strong></td><td>de ejemplos con <mark>etiqueta</mark>: la respuesta correcta</td><td>árboles, KNN, SVM, regresión</td></tr>
+        <tr data-paso="2"><td><strong>No supervisado</strong></td><td>busca grupos o patrones en datos sin etiqueta</td><td>K-Means, PCA</td></tr>
+        <tr data-paso="3"><td><strong>Por refuerzo</strong></td><td>un agente prueba acciones y recibe recompensas o penalizaciones</td><td>aprender a jugar, mover un robot</td></tr>
+        <tr data-paso="4"><td><strong>Aprendizaje profundo</strong></td><td>redes neuronales de muchas capas que descubren solas las características relevantes</td><td>reconocer imágenes y voz; pide muchos datos</td></tr>
+      </tbody>
+    </table>
+    <p class="nota" data-paso="4">Clasificar es predecir una <strong>categoría</strong> (aprueba o no, vino bueno o regular): todo clasificador busca minimizar su error de clasificación, 1 − exactitud. Reducir la dimensionalidad, como vimos la semana 2, ayuda: menos características con la misma información relevante.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Tres ideas para llevarse</h2>
+    <ul class="ideas">
+      <li data-paso="1"><span><strong>Supervisado o no supervisado: la diferencia son las etiquetas.</strong> El supervisado aprende de ejemplos con la respuesta correcta; el no supervisado busca patrones en datos sin ella.</span></li>
+      <li data-paso="2"><span><strong>Un árbol pregunta lo que más ordena.</strong> En cada nodo elige la división que más reduce la <mark>impureza</mark> (Gini o entropía). Sus reglas se leen como «si… entonces…».</span></li>
+      <li data-paso="3"><span><strong>KNN vota; SVM traza una frontera.</strong> KNN guarda los datos y decide por mayoría entre los K vecinos más cercanos. SVM busca la frontera con el margen más ancho entre las clases.</span></li>
+    </ul>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Cómo es un árbol de decisión</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.25fr 1fr">
+      <pre class="compacto" style="font-size: calc(var(--u) * 2.45)"><code>|--- horas &lt;= 5.50            ← raíz
+|   |--- asistencia &lt;= 89.00   ← nodo interno
+|   |   |--- class: no         ← hoja
+|   |--- asistencia &gt;  89.00
+|   |   |--- class: sí
+|--- horas &gt;  5.50
+|   |--- class: sí</code></pre>
+      <ul class="ideas compactas">
+        <li data-paso="1"><span><strong>Raíz:</strong> la primera pregunta, sobre todos los datos.</span></li>
+        <li data-paso="2"><span><strong>Nodos internos:</strong> cada pregunta divide un grupo en dos según un umbral.</span></li>
+        <li data-paso="3"><span><strong>Hojas:</strong> la respuesta. Predicen la clase mayoritaria de los ejemplos que llegan ahí.</span></li>
+        <li data-paso="4"><span><strong>¿Qué pregunta va primero?</strong> La que deja los grupos más «puros». Para eso hay que medir la impureza.</span></li>
+      </ul>
+    </div>
+    <p class="nota">Un árbol que predice si un estudiante aprueba según sus horas de estudio por semana y su asistencia. Lo comprobamos a mano en unos minutos.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Cómo se mide la impureza de un nodo</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1fr 1.2fr">
+      <div>
+        <p><strong>Gini</strong> = 1 − Σ p<sub>i</sub>²</p>
+        <p style="margin-top: 0.6em"><strong>Entropía</strong> = − Σ p<sub>i</sub> · log₂ p<sub>i</sub></p>
+        <p class="nota" style="margin-top: 1em">p<sub>i</sub> es la proporción de cada clase en el nodo. Las dos valen 0 cuando el nodo es puro (una sola clase) y crecen cuanto más mezclado está.</p>
+      </div>
+      <table class="tabla">
+        <thead><tr><th>Nodo</th><th>Gini</th><th>Entropía</th></tr></thead>
+        <tbody>
+          <tr data-paso="1"><td>10 aprueban, 0 reprueban</td><td class="resultado">0</td><td class="resultado">0</td></tr>
+          <tr data-paso="2"><td>5 aprueban, 5 reprueban</td><td class="resultado">0,5</td><td class="resultado">1</td></tr>
+          <tr data-paso="3"><td>7 aprueban, 5 reprueban</td><td class="resultado">0,486</td><td class="resultado">0,980</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p data-paso="3">El árbol prueba muchas divisiones y elige la que deja los nodos hijos <strong>menos impuros</strong>, en promedio ponderado por su tamaño.</p>
+  </section>
+
+  <section class="diapositiva pregunta">
+    <p class="nota">Responde en el Forms del chat de la reunión</p>
+    <p class="enunciado">Un nodo tiene 8 clientes: 6 compran y 2 no. ¿Cuál es su índice de Gini?</p>
+    <ol class="opciones">
+      <li>0,25</li>
+      <li>0,375</li>
+      <li>0,5</li>
+      <li>0,75</li>
+    </ol>
+  </section>
+
+  <section class="diapositiva">
+    <h2>El cálculo, paso a paso</h2>
+    <table class="tabla">
+      <thead><tr><th>Paso</th><th>Cálculo</th><th>Resultado</th></tr></thead>
+      <tbody>
+        <tr data-paso="1"><td>Proporciones</td><td>6/8 compran · 2/8 no compran</td><td class="resultado">0,75 · 0,25</td></tr>
+        <tr data-paso="2"><td>Al cuadrado</td><td>0,75² + 0,25² = 0,5625 + 0,0625</td><td class="resultado">0,625</td></tr>
+        <tr data-paso="3"><td>Gini</td><td>1 − 0,625</td><td class="resultado">0,375</td></tr>
+        <tr data-paso="4"><td>Entropía (para comparar)</td><td>−(0,75 · log₂ 0,75 + 0,25 · log₂ 0,25)</td><td class="resultado">0,811</td></tr>
+      </tbody>
+    </table>
+    <ul class="ideas compactas">
+      <li data-paso="3"><span>0,25 y 0,75 son las proporciones, no la impureza. 0,5 es el máximo de Gini con dos clases: un nodo mitad y mitad.</span></li>
+    </ul>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Comprobamos a mano el árbol de los estudiantes</h2>
+    <table class="tabla" style="font-size: calc(var(--u) * 2.6)">
+      <tbody>
+        <tr><th>Horas</th><td>1</td><td>2</td><td>2</td><td>3</td><td>4</td><td>5</td><td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td></tr>
+        <tr><th>Asistencia (%)</th><td>60</td><td>85</td><td>50</td><td>90</td><td>88</td><td>95</td><td>65</td><td>80</td><td>75</td><td>90</td><td>85</td><td>95</td></tr>
+        <tr><th>Aprueba</th><td>no</td><td>no</td><td>no</td><td>sí</td><td>no</td><td>sí</td><td>no</td><td>sí</td><td>sí</td><td>sí</td><td>sí</td><td>sí</td></tr>
+      </tbody>
+    </table>
+    <table class="tabla" style="font-size: calc(var(--u) * 2.6)">
+      <thead><tr><th>Nodo</th><th>Clases</th><th>Gini</th></tr></thead>
+      <tbody>
+        <tr data-paso="1"><td>Raíz</td><td>7 sí · 5 no</td><td class="resultado">1 − (7/12)² − (5/12)² = 0,486</td></tr>
+        <tr data-paso="2"><td>horas ≤ 5,5 · horas &gt; 5,5</td><td>2 sí y 5 no · 5 sí y 0 no</td><td class="resultado">0,408 · 0 (puro)</td></tr>
+        <tr data-paso="3"><td>Ponderado</td><td>7/12 · 0,408 + 5/12 · 0</td><td class="resultado">0,238</td></tr>
+        <tr data-paso="4"><td>Mejor división por asistencia (≤ 65)</td><td>3 no | 7 sí y 2 no</td><td class="resultado">0,259</td></tr>
+      </tbody>
+    </table>
+    <p class="nota" data-paso="4">Empezó por las horas porque esa división baja más la impureza: 0,238 frente a 0,259. Ganó por poco: con un estudiante más podría cambiar. El umbral 5,5 es el punto medio entre 5 y 6. Código: anexo del notebook.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Cómo elige el árbol dónde dividir</h2>
+    <figure id="anim-gini">
+      <figcaption class="solo-lector">Doce clientes con gasto y visitas. Se prueban cuatro divisiones y se calcula el Gini ponderado de cada una; gana la de menor valor. <span data-paso="1"></span><span data-paso="2"></span><span data-paso="3"></span><span data-paso="4"></span><span data-paso="5"></span><span data-paso="6"></span></figcaption>
+    </figure>
+    <p class="nota">Gini ponderado = Σ (tamaño del hijo ÷ tamaño del nodo) × Gini del hijo. El árbol repite esta búsqueda en cada nodo hijo.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Qué tan lejos crece un árbol, y cuándo desconfiar</h2>
+    <ul class="ideas compactas">
+      <li data-paso="1"><span><strong>Sin límite de profundidad, un árbol crece hasta que cada hoja es pura</strong>: memoriza los datos, también su ruido. Es el <mark>sobreajuste</mark>: un árbol demasiado complejo que acierta con lo que ya vio y falla con datos nuevos.</span></li>
+      <li data-paso="2"><span><strong>Se evita podando:</strong> limitar la profundidad (<code>max_depth</code>), pedir un mínimo de filas por hoja (<code>min_samples_leaf</code>) o recortar ramas después de entrenar (<code>ccp_alpha</code>).</span></li>
+      <li data-paso="3"><span><strong>Su gran ventaja:</strong> se interpreta y se dibuja. Maneja atributos numéricos y categóricos; en scikit-learn, las categóricas se codifican antes (por ejemplo, con <code>pd.get_dummies</code>).</span></li>
+      <li data-paso="4"><span><strong>Acertar el 100 % de los datos de entrenamiento no prueba nada.</strong> Hay que medir con datos que el modelo no vio: lo hacemos ahora con los vinos.</span></li>
+    </ul>
+  </section>
+
+  <!-- ============ BLOQUE 3 · COLAB: ÁRBOL ============ -->
+
+  <section class="diapositiva bloque" data-bloque="3">
+    <span class="numero">3</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>La IA entrena un árbol con 1359 vinos reales. En Colab lo comprobamos a mano, lo leemos y lo podamos.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Le pedimos a la IA un árbol para vinos</h2>
+    <div class="dos-columnas">
+      <div>
+        <pre class="prompt">Tengo un dataset de 1599 vinos tintos con 11 medidas de laboratorio y un puntaje de los catadores. Entrena en Python un árbol de decisión que prediga si un vino es bueno (puntaje 6 o más) o regular a partir de su alcohol, sus sulfatos y su acidez volátil, y muéstrame sus reglas.</pre>
+      </div>
+      <div>
+        <h3>Para interpretar su respuesta</h3>
+        <ul>
+          <li data-paso="1">¿Los datos están limpios? ¿Hay vinos repetidos?</li>
+          <li data-paso="2">¿Coincide su Gini con el que calculamos a mano?</li>
+          <li data-paso="3">¿Qué regla aprendió? ¿Funciona con vinos que no vio?</li>
+        </ul>
+      </div>
+    </div>
+    <p class="nota">Notebook, secciones 1 y 2. Datos: <em>Wine Quality</em>, Cortez y otros (2009), repositorio UCI.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Lo que encontramos en el notebook</h2>
+    <table class="tabla">
+      <thead><tr><th>Celda</th><th>Qué vimos</th><th>Resultado</th></tr></thead>
+      <tbody>
+        <tr data-paso="1"><td>Calidad de los datos</td><td>sin faltantes, pero con filas repetidas: se quitan</td><td class="resultado">240 duplicados → 1359 vinos</td></tr>
+        <tr data-paso="2"><td>Raíz</td><td>719 buenos y 640 regulares, a mano y en scikit-learn</td><td class="resultado">Gini 0,498</td></tr>
+        <tr data-paso="3"><td>Primera división</td><td>alcohol ≤ 10,15: 0,435 · alcohol &gt; 10,15: 0,388</td><td class="resultado">ponderado 0,411</td></tr>
+        <tr data-paso="4"><td>La regla</td><td colspan="2">Más de 10,15 % de alcohol → «bueno»; si no, «regular». El segundo nivel no cambia la respuesta: solo deja hojas más puras.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="diapositiva">
+    <h2>¿Funciona con vinos nuevos?</h2>
+    <table class="tabla">
+      <thead><tr><th>Árbol</th><th>Hojas</th><th>Exactitud en entrenamiento</th><th>Exactitud en prueba</th></tr></thead>
+      <tbody>
+        <tr data-paso="1"><td>Sin límite</td><td>317</td><td class="resultado">0,995</td><td class="resultado">0,688</td></tr>
+        <tr data-paso="2"><td><code>max_depth=3</code></td><td>8</td><td class="resultado">0,739</td><td class="resultado">0,732</td></tr>
+        <tr data-paso="2"><td><code>min_samples_leaf=20</code></td><td>37</td><td class="resultado">0,772</td><td class="resultado">0,750</td></tr>
+      </tbody>
+    </table>
+    <ul class="ideas compactas">
+      <li data-paso="1"><span>Sin límite, el árbol casi no falla con los vinos que vio y acierta menos con los nuevos: <strong>memorizó</strong>.</span></li>
+      <li data-paso="2"><span>Podado tiene muchas menos hojas y <strong>generaliza mejor</strong>. Entrenamiento: 75 % de los vinos; prueba: el 25 % que no vio.</span></li>
+    </ul>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Tu turno en el notebook</h2>
+    <ol class="plan">
+      <li><span class="min">0–1</span><span>Ve a la celda <strong>✋ Tu turno</strong> de la sección 2.4.</span></li>
+      <li><span class="min">1–4</span><span>Cambia <code>min_samples_leaf</code> por 5, 50 y 100 (o <code>max_depth</code> por 1, 6 y 10). Ejecuta cada vez con <strong>Shift + Enter</strong>.</span></li>
+      <li><span class="min">4–5</span><span>Escribe en el chat el valor con la mejor exactitud en <strong>prueba</strong> y cuántas hojas tenía.</span></li>
+    </ol>
+    <div class="consigna-pie">
+      <p class="nota">¿Te sale un error? Pégalo en el chat y lo vemos en pantalla.</p>
+      <button class="temporizador" type="button" data-minutos="4" aria-label="Temporizador de la consigna"></button>
+    </div>
+  </section>
+
+  <!-- ============ BLOQUE 4 · KNN Y SVM ============ -->
+
+  <section class="diapositiva bloque" data-bloque="4">
+    <span class="numero">4</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Vecinos, márgenes y <em>kernels</em>: cómo decide cada clasificador, y los mismos vinos en Colab.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>KNN: ¿aprueba quien estudia 5 horas y asiste al 85 %?</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.3fr 1fr">
+      <table class="tabla">
+        <thead><tr><th>Vecino</th><th>Horas</th><th>Asist.</th><th>Aprueba</th><th>Distancia</th></tr></thead>
+        <tbody>
+          <tr><td>1.º</td><td>4</td><td>88</td><td>no</td><td>0,130</td></tr>
+          <tr><td>2.º</td><td>6</td><td>80</td><td>sí</td><td>0,157</td></tr>
+          <tr><td>3.º</td><td>5</td><td>95</td><td>sí</td><td>0,222</td></tr>
+          <tr><td>4.º</td><td>3</td><td>90</td><td>sí</td><td>0,248</td></tr>
+          <tr><td>5.º</td><td>7</td><td>75</td><td>sí</td><td>0,314</td></tr>
+        </tbody>
+      </table>
+      <table class="tabla">
+        <thead><tr><th>K</th><th>Votos</th><th>Predice</th></tr></thead>
+        <tbody>
+          <tr data-paso="1"><td>1</td><td>1 no</td><td class="resultado">no</td></tr>
+          <tr data-paso="2"><td>3</td><td>2 sí · 1 no</td><td class="resultado">sí</td></tr>
+          <tr data-paso="3"><td>5</td><td>4 sí · 1 no</td><td class="resultado">sí</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="nota">KNN predice la clase que más se repite entre los K vecinos más cercanos. Distancias euclidianas con los datos escalados con min-max. El árbol de los estudiantes la clasifica como «no»: dos modelos razonables, dos respuestas.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Cómo se elige K, y cuánto cuesta</h2>
+    <ul class="ideas compactas">
+      <li data-paso="1"><span><strong>K pequeño, sobreajuste.</strong> Con K = 1 cada dato de entrenamiento es su propio vecino: memoriza. Un solo vecino raro decide por todos.</span></li>
+      <li data-paso="2"><span><strong>K grande, subajuste.</strong> Si votan todos, siempre gana la clase más común.</span></li>
+      <li data-paso="3"><span><strong>K se elige probando.</strong> Se prueban varios valores y se elige el de menor error en datos de validación, no en los de entrenamiento. No hay un K universal.</span></li>
+      <li data-paso="4"><span><strong>KNN no entrena: guarda.</strong> <code>fit</code> solo almacena los datos (aprendizaje perezoso). Todo el trabajo ocurre al predecir: una distancia a cada fila guardada. Con millones de filas, cada predicción es lenta y ocupa mucha memoria.</span></li>
+    </ul>
+  </section>
+
+  <section class="diapositiva">
+    <h2>KNN con los vinos</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1fr 1fr">
+      <table class="tabla">
+        <thead><tr><th>K</th><th>Entrenamiento</th><th>Prueba</th></tr></thead>
+        <tbody>
+          <tr data-paso="1"><td>1</td><td class="resultado">0,995</td><td class="resultado">0,706</td></tr>
+          <tr data-paso="1"><td>5</td><td class="resultado">0,791</td><td class="resultado">0,729</td></tr>
+          <tr data-paso="1"><td>15</td><td class="resultado">0,756</td><td class="resultado">0,759</td></tr>
+          <tr data-paso="1"><td>101</td><td class="resultado">0,737</td><td class="resultado">0,741</td></tr>
+          <tr data-paso="1"><td>1019 (todos)</td><td class="resultado">0,533</td><td class="resultado">0,518</td></tr>
+        </tbody>
+      </table>
+      <ul class="ideas compactas">
+        <li data-paso="2"><span><strong>Escalar antes:</strong> <code>MinMaxScaler</code> se ajusta solo con entrenamiento. Con las 11 medidas sin escalar, la prueba baja a 0,641; escaladas, 0,750.</span></li>
+        <li data-paso="3"><span><strong>Matriz de confusión</strong> (K = 15): 43 vinos buenos tomados por regulares y 39 regulares por buenos.</span></li>
+      </ul>
+    </div>
+    <p class="nota">Notebook, sección 3. Aquí elegimos K mirando la prueba solo para ilustrar; lo correcto es usar validación, que vemos la semana 4.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>SVM: el margen más ancho, y el truco del <em>kernel</em></h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.1fr 1fr">
+      <ul class="ideas compactas">
+        <li data-paso="1"><span>El <strong>hiperplano</strong> es la frontera que separa las clases: una recta en 2 dimensiones, un plano en 3.</span></li>
+        <li data-paso="2"><span>SVM elige el que deja el <strong>margen más ancho</strong> hasta los puntos más cercanos de cada clase, los <strong>vectores de soporte</strong>. Ese margen lo hace resistente al sobreajuste.</span></li>
+        <li data-paso="3"><span>Si las clases no se separan con una recta, un <strong><em>kernel</em></strong> las lleva a un espacio de más dimensiones donde una frontera plana sí las separa.</span></li>
+      </ul>
+      <div data-paso="4">
+        <table class="tabla">
+          <thead><tr><th>Exactitud en prueba</th><th>Vinos</th><th>Círculos</th></tr></thead>
+          <tbody>
+            <tr><td>SVM lineal</td><td class="resultado">0,747</td><td class="resultado">0,45</td></tr>
+            <tr><td>SVM <em>kernel</em> RBF</td><td class="resultado">0,753</td><td class="resultado">1,00</td></tr>
+          </tbody>
+        </table>
+        <p class="nota" style="margin-top: 0.8em">En los vinos la frontera es casi lineal: el <em>kernel</em> casi no ayuda. En dos círculos concéntricos ninguna recta sirve y el <em>kernel</em> lo cambia todo. Notebook, sección 4.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Árbol, KNN o SVM</h2>
+    <table class="tabla">
+      <thead><tr><th></th><th>Árbol de decisión</th><th>KNN</th><th>SVM</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Cómo decide</strong></td><td>preguntas que reducen la impureza</td><td>voto de los K vecinos</td><td>lado del hiperplano</td></tr>
+        <tr><td><strong>Entrenar</strong></td><td>rápido</td><td>solo guarda los datos</td><td>lento con muchos datos</td></tr>
+        <tr><td><strong>Predecir</strong></td><td>muy rápido</td><td>lento con muchos datos</td><td>rápido</td></tr>
+        <tr><td><strong>A favor</strong></td><td>se interpreta; numéricos y categóricos</td><td>simple, sin supuestos</td><td>alta dimensión; no lineal con <em>kernel</em></td></tr>
+        <tr><td><strong>Cuidado</strong></td><td>crece sin límite: podar</td><td>escalar; K pequeño sobreajusta</td><td>escalar; elegir el <em>kernel</em></td></tr>
+      </tbody>
+    </table>
+    <p class="nota">Con los vinos, los tres quedan cerca del 75 % en prueba: el puntaje lo dan personas al catar. Ninguno es siempre el mejor; se comparan con datos de prueba. Los tres son supervisados.</p>
+  </section>
+
+  <!-- ============ BLOQUE 5 · CIERRE ============ -->
+
+  <section class="diapositiva bloque" data-bloque="5">
+    <span class="numero">5</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Repaso de la semana, el Aprendizaje Autónomo 1 y el tutor de la semana 4.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Repaso: lo que debes poder explicar</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1fr 1fr">
+      <ul class="ideas compactas">
+        <li><span>Supervisado usa etiquetas; K-Means agrupa sin ellas. Refuerzo: recompensas y penalizaciones.</span></li>
+        <li><span>Gini y entropía miden la <mark>impureza</mark>, o grado de mezcla, de un nodo.</span></li>
+        <li><span>Un árbol sobreajustado es demasiado complejo; se poda.</span></li>
+        <li><span>Árboles: fáciles de interpretar; numéricos y categóricos.</span></li>
+      </ul>
+      <ul class="ideas compactas">
+        <li><span>KNN: mayoría entre los K vecinos; solo guarda; costoso con muchos datos.</span></li>
+        <li><span>K pequeño sobreajusta; K se elige con validación.</span></li>
+        <li><span>SVM: hiperplano con el margen máximo; <em>kernel</em> para lo no lineal.</span></li>
+        <li><span>Aprendizaje profundo: aprende solo las características relevantes.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>El Aprendizaje Autónomo 1 vence este domingo</h2>
+    <ul class="ideas compactas">
+      <li><span><strong>Reiniciar y ejecutar todo</strong> sin errores antes de exportar.</span></li>
+      <li><span>Series con etiquetas propias y sus atributos; un DataFrame desde la Series y otro desde un diccionario o un <em>array</em>.</span></li>
+      <li><span><code>read_csv</code>, <code>head()</code>, <code>info()</code>, <code>shape</code> y <strong><code>describe()</code></strong>, con un párrafo que describe tu dataset.</span></li>
+      <li><span><code>df["col"]</code> y <code>df[["col"]]</code>, varias columnas, un filtro combinado con <code>.loc</code> y <code>.iloc</code> con <em>slicing</em>.</span></li>
+      <li><span>Un <code>.zip</code> con el notebook y el PDF: código comentado, capturas y las 5 respuestas con ejemplos de tu dataset.</span></li>
+    </ul>
+    <p class="nota">Es individual. Vence el domingo 15 de noviembre. <a href="../ver.html?f=entregas/aa1.md">Guía completa y rúbrica</a>.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Del notebook de hoy al Aprendizaje Autónomo 2</h2>
+    <ul class="ideas compactas">
+      <li data-paso="1"><span><strong>Mismo dataset del Aprendizaje Autónomo 1:</strong> revisa que tenga una variable categórica (tu objetivo) y dos o más numéricas.</span></li>
+      <li data-paso="2"><span><strong>Lo que ya practicaste hoy:</strong> separar entrenamiento y prueba, ajustar <code>MinMaxScaler</code> solo con entrenamiento, probar varios K y la matriz de confusión.</span></li>
+      <li data-paso="3"><span><strong>Prueba ya:</strong> la sección 6 del notebook te pide repetir los pasos con tu dataset. Si algo falla, tráelo a la sesión.</span></li>
+    </ul>
+    <p class="nota">Vence el domingo 6 de diciembre. Lo explico completo el jueves 19 de noviembre. <a href="../ver.html?f=entregas/aa2.md">Guía del Aprendizaje Autónomo 2</a>.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Cómo usar el tutor</h2>
+    <ol>
+      <li>Abre el sitio del curso y pulsa <strong>Copiar tutor</strong> en la semana 4. También puedes <a href="../ver.html?f=semana-04/tutor.md">abrirlo aquí</a>.</li>
+      <li>Pégalo completo en ChatGPT, Gemini o Claude (sirve la versión gratuita).</li>
+      <li>Conversa 20–30 minutos. Te hará preguntas y no te dará respuestas.</li>
+      <li>Al final, envía tu ticket de entrada en el <a href="https://forms.cloud.microsoft/r/JaPVYC1zKA">formulario de tickets</a> hasta las 12:00 del jueves 19 de noviembre.</li>
+    </ol>
+    <p class="nota">Si tienes poco tiempo, escribe RÁPIDO al empezar: irá directo a las preguntas de control.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Antes de irnos</h2>
+    <ul class="cierre-lista">
+      <li><span class="que">Este domingo, 15 nov</span><span>Aprendizaje Práctico de la semana 3 y Aprendizaje Autónomo 1.</span></li>
+      <li><span class="que">Si ves la grabación</span><span>Ejecuta el <a href="https://colab.research.google.com/github/carlosandresat/uide-big-data-online/blob/main/semana-03/ejemplos/clasificacion-vinos.ipynb">notebook de vinos</a> en Colab y resuelve su sección 6: el mejor <code>min_samples_leaf</code>, el mejor K y los mismos pasos con tu dataset.</span></li>
+      <li><span class="que">Próxima semana</span><span>Entrenamiento y validación de modelos, el jueves 19 de noviembre. Explicaré el Aprendizaje Autónomo 2. Antes, usa el <a href="../ver.html?f=semana-04/tutor.md">tutor de la semana 4</a>.</span></li>
+    </ul>
+  </section>
+
+</main>
+<script src="../assets/presentacion.js"></script>
+<script src="anim-gini.js"></script>
+</body>
+</html>
