@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Prácticas y Herramientas de Big Data · Semana 4</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Overpass+Mono:wght@400;600&family=Overpass:wght@400;600;700;800;900&display=swap">
+  <link rel="stylesheet" href="../assets/presentacion.css">
+  <script src="../assets/tema.js"></script>
+</head>
+<body data-curso="big-data" data-formato="guiada" data-bloque2="Sobreajuste y validación" data-bloque3="Colab: validar sin trampa" data-bloque4="Aprendizaje Autónomo 2">
+<div class="barra-lectura">
+  <a href="../index.html">Volver al curso</a>
+  <button type="button" class="boton" data-alternar-tema>Modo oscuro</button>
+</div>
+<main class="escenario">
+
+  <section class="diapositiva portada">
+    <div class="portada-panel">
+      <span>Semana</span>
+      <span class="semana-numero">4</span>
+      <span>de 7</span>
+    </div>
+    <div class="portada-texto">
+      <p class="curso">Prácticas y Herramientas de Big Data</p>
+      <h1>Entrenamiento y validación de modelos</h1>
+      <p class="objetivo">Reconocer el sobreajuste y el subajuste, validar un modelo sin hacerse trampa con K-Fold, practicándolo en Colab con los vinos, y entender qué pide el Aprendizaje Autónomo 2.</p>
+      <p class="fecha">Jueves 19 de noviembre · 19:00</p>
+      <div class="recorrido-completo"></div>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Plan de hoy</h2>
+    <ol class="plan">
+      <li data-bloque="1">Pista para el Aprendizaje Práctico y abrimos el notebook de hoy en Colab.</li>
+      <li data-bloque="2">Subajuste y sobreajuste, sesgo y varianza, la curva de sobreajuste y la validación cruzada K-Fold.</li>
+      <li data-bloque="3">En Colab: la curva con los vinos, K-Fold, y una IA que obtiene 93 % con datos al azar.</li>
+      <li data-bloque="4">Cómo prevenir el sobreajuste, elegir K sin trampa y el Aprendizaje Autónomo 2 en detalle.</li>
+      <li data-bloque="5">Clasificar imágenes, repaso de la semana y el tutor de la semana 5.</li>
+    </ol>
+  </section>
+
+  <!-- ============ BLOQUE 1 · PUENTE ============ -->
+
+  <section class="diapositiva bloque" data-bloque="1">
+    <span class="numero">1</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Para el Aprendizaje Práctico de este domingo</h2>
+    <p class="pista">Distingue el modelo que no aprende del que memoriza: compara entrenamiento con prueba y piensa en sesgo y varianza. Ten una técnica para cada caso (menos variables, poda, regularización, <em>dropout</em>, más datos) y recuerda qué ganas y qué pagas con la validación cruzada. En imágenes: ¿qué algoritmo necesita etiquetas y cuál no?</p>
+    <p class="nota">Una pista, no la pregunta. El cuestionario vence el domingo 22 de noviembre.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Abre ya el notebook de hoy</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.3fr 1fr">
+      <ol class="plan">
+        <li><span class="min">1</span><span>Abre el enlace del chat o el botón de la derecha. Se abre en <strong>Google Colab</strong>.</span></li>
+        <li><span class="min">2</span><span><strong>Archivo → Guardar una copia en Drive.</strong> Así puedes editarlo.</span></li>
+        <li><span class="min">3</span><span>Ejecuta la primera celda con <strong>Shift + Enter</strong>. Debe mostrar <code>(1359, 3)</code>.</span></li>
+      </ol>
+      <div>
+        <p><a class="boton" href="https://colab.research.google.com/github/carlosandresat/uide-big-data-online/blob/main/semana-04/ejemplos/validacion-vinos.ipynb">Abrir en Colab</a></p>
+        <p class="nota" style="margin-top: 1em">Los mismos vinos de la semana 3. Lo usamos en los bloques 3 y 4; su última sección es el ejercicio para quien ve la grabación.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ BLOQUE 2 · SOBREAJUSTE Y VALIDACIÓN ============ -->
+
+  <section class="diapositiva bloque" data-bloque="2">
+    <span class="numero">2</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Subajuste y sobreajuste, sesgo y varianza, la curva de sobreajuste y la validación cruzada K-Fold.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Tres ideas para llevarse</h2>
+    <ul class="ideas">
+      <li data-paso="1"><span><strong>Subajuste o sobreajuste.</strong> Un modelo demasiado simple no capta los patrones: falla en entrenamiento y en prueba. Uno demasiado complejo memoriza, incluido el ruido: brilla en entrenamiento y <mark>falla en prueba</mark>.</span></li>
+      <li data-paso="2"><span><strong>Se evalúa con datos que el modelo no vio.</strong> La prueba se separa antes de todo: escalar, imputar o elegir variables se ajusta solo con entrenamiento.</span></li>
+      <li data-paso="3"><span><strong>K-Fold rota la prueba.</strong> K entrenamientos; cada fila prueba una vez. La estimación es más fiable, a cambio de K veces el cómputo.</span></li>
+    </ul>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Dos formas de equivocarse: sesgo y varianza</h2>
+    <table class="tabla">
+      <thead><tr><th>Situación</th><th>Sesgo</th><th>Varianza</th><th>Entrenamiento</th><th>Prueba</th></tr></thead>
+      <tbody>
+        <tr data-paso="1"><td><strong>Subajuste</strong></td><td class="resultado">alto</td><td>baja</td><td>bajo</td><td>bajo</td></tr>
+        <tr data-paso="2"><td><strong>Sobreajuste</strong></td><td>bajo</td><td class="resultado">alta</td><td>muy alto</td><td>bastante más bajo</td></tr>
+        <tr data-paso="3"><td><strong>Buen ajuste</strong></td><td>bajo</td><td>baja</td><td>alto</td><td>alto, parecido</td></tr>
+      </tbody>
+    </table>
+    <ul class="ideas compactas">
+      <li data-paso="1"><span><strong>Sesgo:</strong> error por suposiciones demasiado simples, como usar una recta para una curva.</span></li>
+      <li data-paso="2"><span><strong>Varianza:</strong> cuánto cambia el modelo si cambian un poco los datos de entrenamiento, como un árbol sin límite.</span></li>
+      <li data-paso="4"><span><strong>Por qué se sobreajusta:</strong> un modelo demasiado complejo <strong>para pocos datos</strong>, o muchas <mark>variables irrelevantes</mark>, en las que encuentra patrones que son puro azar.</span></li>
+    </ul>
+  </section>
+
+  <section class="diapositiva">
+    <h2>La curva de sobreajuste, con los vinos</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.6fr 1fr">
+      <figure><svg viewBox="0 0 760 400" role="img" aria-label="Exactitud del árbol según su profundidad, con los vinos: en entrenamiento sube de 0,713 a 0,995; en prueba se queda entre 0,69 y 0,74, con su mejor valor, 0,735, en profundidad 5, y baja a 0,688 sin límite." style="width:100%;height:auto;max-height:calc(var(--u) * 56);display:block;font-family:var(--f-texto)">
+<line x1="90" x2="720" y1="330.0" y2="330.0" style="stroke:var(--regla);stroke-width:1.5"/><text x="78" y="337.0" text-anchor="end" style="fill:var(--tinta-suave);font-size:20px">0,6</text>
+<line x1="90" x2="720" y1="255.0" y2="255.0" style="stroke:var(--regla);stroke-width:1.5"/><text x="78" y="262.0" text-anchor="end" style="fill:var(--tinta-suave);font-size:20px">0,7</text>
+<line x1="90" x2="720" y1="180.0" y2="180.0" style="stroke:var(--regla);stroke-width:1.5"/><text x="78" y="187.0" text-anchor="end" style="fill:var(--tinta-suave);font-size:20px">0,8</text>
+<line x1="90" x2="720" y1="105.0" y2="105.0" style="stroke:var(--regla);stroke-width:1.5"/><text x="78" y="112.0" text-anchor="end" style="fill:var(--tinta-suave);font-size:20px">0,9</text>
+<line x1="90" x2="720" y1="30.0" y2="30.0" style="stroke:var(--regla);stroke-width:1.5"/><text x="78" y="37.0" text-anchor="end" style="fill:var(--tinta-suave);font-size:20px">1,0</text>
+<text x="90" y="360" text-anchor="middle" style="fill:var(--tinta-suave);font-size:20px">1</text>
+<text x="160" y="360" text-anchor="middle" style="fill:var(--tinta-suave);font-size:20px">2</text>
+<text x="230" y="360" text-anchor="middle" style="fill:var(--tinta-suave);font-size:20px">3</text>
+<text x="300" y="360" text-anchor="middle" style="fill:var(--tinta-suave);font-size:20px">4</text>
+<text x="370" y="360" text-anchor="middle" style="fill:var(--tinta-suave);font-size:20px">5</text>
+<text x="440" y="360" text-anchor="middle" style="fill:var(--tinta-suave);font-size:20px">6</text>
+<text x="510" y="360" text-anchor="middle" style="fill:var(--tinta-suave);font-size:20px">8</text>
+<text x="580" y="360" text-anchor="middle" style="fill:var(--tinta-suave);font-size:20px">10</text>
+<text x="650" y="360" text-anchor="middle" style="fill:var(--tinta-suave);font-size:20px">12</text>
+<text x="720" y="360" text-anchor="middle" style="fill:var(--tinta-suave);font-size:18px">sin límite</text>
+<text x="405" y="392" text-anchor="middle" style="fill:var(--tinta);font-size:20px;font-weight:700">profundidad máxima del árbol</text>
+<text x="22" y="180" transform="rotate(-90 22 180)" text-anchor="middle" style="fill:var(--tinta);font-size:20px;font-weight:700">exactitud</text>
+<polyline points="90,245.2 160,245.2 230,225.8 300,216.0 370,198.7 440,186.0 510,142.5 580,110.2 650,88.5 720,33.8" style="fill:none;stroke:var(--tinta-suave);stroke-width:4;stroke-dasharray:10 7"/>
+<polyline points="90,259.5 160,259.5 230,231.0 300,241.5 370,228.8 440,239.2 510,235.5 580,250.5 650,248.2 720,264.0" style="fill:none;stroke:var(--acento);stroke-width:5"/>
+<circle cx="90" cy="259.5" r="6" style="fill:var(--acento)"/>
+<circle cx="160" cy="259.5" r="6" style="fill:var(--acento)"/>
+<circle cx="230" cy="231.0" r="6" style="fill:var(--acento)"/>
+<circle cx="300" cy="241.5" r="6" style="fill:var(--acento)"/>
+<circle cx="370" cy="228.8" r="6" style="fill:var(--acento)"/>
+<circle cx="440" cy="239.2" r="6" style="fill:var(--acento)"/>
+<circle cx="510" cy="235.5" r="6" style="fill:var(--acento)"/>
+<circle cx="580" cy="250.5" r="6" style="fill:var(--acento)"/>
+<circle cx="650" cy="248.2" r="6" style="fill:var(--acento)"/>
+<circle cx="720" cy="264.0" r="6" style="fill:var(--acento)"/>
+<circle cx="90" cy="245.2" r="5" style="fill:var(--tinta-suave)"/>
+<circle cx="160" cy="245.2" r="5" style="fill:var(--tinta-suave)"/>
+<circle cx="230" cy="225.8" r="5" style="fill:var(--tinta-suave)"/>
+<circle cx="300" cy="216.0" r="5" style="fill:var(--tinta-suave)"/>
+<circle cx="370" cy="198.7" r="5" style="fill:var(--tinta-suave)"/>
+<circle cx="440" cy="186.0" r="5" style="fill:var(--tinta-suave)"/>
+<circle cx="510" cy="142.5" r="5" style="fill:var(--tinta-suave)"/>
+<circle cx="580" cy="110.2" r="5" style="fill:var(--tinta-suave)"/>
+<circle cx="650" cy="88.5" r="5" style="fill:var(--tinta-suave)"/>
+<circle cx="720" cy="33.8" r="5" style="fill:var(--tinta-suave)"/>
+<text x="700" y="21.8" text-anchor="end" style="fill:var(--tinta-suave);font-size:20px;font-weight:700">entrenamiento</text>
+<text x="714" y="294.0" text-anchor="end" style="fill:var(--acento);font-size:20px;font-weight:800">prueba</text>
+<text x="370" y="260.8" text-anchor="middle" style="fill:var(--acento);font-size:18px;font-weight:700">mejor: 0,735</text>
+</svg></figure>
+      <ul class="ideas compactas">
+        <li data-paso="1"><span><strong>Profundidad 1 y 2:</strong> 0,713 en entrenamiento y 0,694 en prueba. Bajas y juntas: subajuste.</span></li>
+        <li data-paso="2"><span><strong>Profundidad 3 a 5:</strong> la mejor zona en prueba, hasta 0,735.</span></li>
+        <li data-paso="3"><span><strong>Sin límite:</strong> 0,995 en entrenamiento y 0,688 en prueba. La diferencia es la señal del sobreajuste.</span></li>
+      </ul>
+    </div>
+    <p class="nota">Árbol de decisión con alcohol, sulfatos y acidez volátil; 1359 vinos, 25 % para prueba. Notebook, sección 2.</p>
+  </section>
+
+  <section class="diapositiva pregunta">
+    <p class="nota">Responde en el Forms del chat de la reunión</p>
+    <p class="enunciado">Validación cruzada de 5 pliegues con 1000 filas: ¿cuántas veces se entrena el modelo y con cuántas filas cada vez?</p>
+    <ol class="opciones">
+      <li>1 vez, con 800 filas</li>
+      <li>5 veces, con 200 filas</li>
+      <li>5 veces, con 800 filas</li>
+      <li>1000 veces, con 999 filas</li>
+    </ol>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Cómo rota la prueba en K-Fold</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.15fr 1fr">
+      <table class="tabla" style="font-size: calc(var(--u) * 2.5)">
+        <thead><tr><th>Ronda</th><th>P1</th><th>P2</th><th>P3</th><th>P4</th><th>P5</th></tr></thead>
+        <tbody>
+          <tr data-paso="1"><td>1</td><td class="resultado">prueba</td><td>entr.</td><td>entr.</td><td>entr.</td><td>entr.</td></tr>
+          <tr data-paso="1"><td>2</td><td>entr.</td><td class="resultado">prueba</td><td>entr.</td><td>entr.</td><td>entr.</td></tr>
+          <tr data-paso="1"><td>3</td><td>entr.</td><td>entr.</td><td class="resultado">prueba</td><td>entr.</td><td>entr.</td></tr>
+          <tr data-paso="1"><td>4</td><td>entr.</td><td>entr.</td><td>entr.</td><td class="resultado">prueba</td><td>entr.</td></tr>
+          <tr data-paso="1"><td>5</td><td>entr.</td><td>entr.</td><td>entr.</td><td>entr.</td><td class="resultado">prueba</td></tr>
+        </tbody>
+      </table>
+      <div data-paso="2">
+        <table class="tabla" style="font-size: calc(var(--u) * 2.5)">
+          <thead><tr><th>K</th><th>Entrena con</th><th>Media</th><th>Desv.</th><th>Tiempo</th></tr></thead>
+          <tbody>
+            <tr><td>2</td><td>680 vinos</td><td class="resultado">0,720</td><td>0,009</td><td>×2</td></tr>
+            <tr><td>5</td><td>1088</td><td class="resultado">0,747</td><td>0,018</td><td>×5</td></tr>
+            <tr><td>10</td><td>1224</td><td class="resultado">0,745</td><td>0,028</td><td>×10</td></tr>
+            <tr><td>20</td><td>1292</td><td class="resultado">0,742</td><td>0,046</td><td>×20</td></tr>
+          </tbody>
+        </table>
+        <p class="nota" style="margin-top: 0.8em">KNN de la semana 3 (15 vecinos, escalado) con los 1359 vinos. Notebook, «Tu turno» de la sección 3.</p>
+      </div>
+    </div>
+    <ul class="ideas compactas">
+      <li data-paso="1"><span>Cada fila prueba una sola vez y entrena K − 1 veces. Con 1000 filas y K = 5: 5 entrenamientos de 800 filas.</span></li>
+      <li data-paso="2"><span>K bajo entrena con menos datos y subestima el rendimiento: más <strong>sesgo</strong>. K alto cuesta K entrenamientos: con muchos datos, K-Fold es caro.</span></li>
+    </ul>
+  </section>
+
+  <section class="diapositiva">
+    <h2>K-Fold en marcha: cinco rondas, un promedio</h2>
+    <figure id="anim-kfold"><figcaption class="solo-lector">Validación cruzada de 5 pliegues sobre las 150 flores iris: se barajan y se dividen en 5 pliegues de 30; cada pliegue es la prueba una vez, mientras se entrena con los otros 120; al final se promedian las cinco exactitudes. <span data-paso="1"></span><span data-paso="2"></span><span data-paso="3"></span><span data-paso="4"></span><span data-paso="5"></span><span data-paso="6"></span><span data-paso="7"></span></figcaption></figure>
+  </section>
+
+  <!-- ============ BLOQUE 3 · COLAB ============ -->
+
+  <section class="diapositiva bloque" data-bloque="3">
+    <span class="numero">3</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>En Colab: la curva con los vinos, K-Fold, y una IA que obtiene 93 % con datos al azar.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Una sola división engaña; K-Fold no</h2>
+    <table class="tabla">
+      <thead><tr><th>Celda</th><th>Qué vimos</th><th>Resultado</th></tr></thead>
+      <tbody>
+        <tr data-paso="1"><td>3.1 · Diez semillas</td><td>el mismo árbol de profundidad 3, con 10 divisiones distintas</td><td class="resultado">de 0,665 a 0,741</td></tr>
+        <tr data-paso="2"><td>3.2 · K-Fold</td><td>5 pliegues: 0,684 · 0,710 · 0,710 · 0,691 · 0,708</td><td class="resultado">media 0,701 ± 0,011</td></tr>
+        <tr data-paso="3"><td>3.3 · Elegir profundidad</td><td>la mejor media de 5 pliegues es la profundidad 5; sin límite, la peor</td><td class="resultado">0,713 frente a 0,655</td></tr>
+      </tbody>
+    </table>
+    <p class="nota" data-paso="3">K-Fold no previene el sobreajuste: lo <strong>detecta</strong> con una estimación más fiable, porque todas las filas prueban una vez. Con ella se eligen los hiperparámetros.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Tu turno en el notebook</h2>
+    <ol class="plan">
+      <li><span class="min">0–1</span><span>Ve a la celda <strong>✋ Tu turno</strong> de la sección 3.</span></li>
+      <li><span class="min">1–4</span><span>Cambia <code>n_splits=5</code> por 2, 10 y 20. Ejecuta cada vez con <strong>Shift + Enter</strong>.</span></li>
+      <li><span class="min">4–5</span><span>Escribe en el chat: ¿con qué K la media es más baja? ¿Cómo cambia el tiempo?</span></li>
+    </ol>
+    <div class="consigna-pie">
+      <p class="nota">¿Te sale un error? Pégalo en el chat y lo vemos en pantalla.</p>
+      <button class="temporizador" type="button" data-minutos="4" aria-label="Temporizador de la consigna"></button>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Le pedimos a la IA una validación</h2>
+    <div class="dos-columnas">
+      <div>
+        <p>Le pedimos a la IA:</p>
+        <pre class="prompt">Tengo 100 pacientes con 5000 medidas genéticas cada uno y si respondieron o no a un tratamiento. Elige las 20 mejores variables y evalúa un modelo con validación cruzada de 5 pliegues.</pre>
+      </div>
+      <div>
+        <h3>Para interpretar su respuesta</h3>
+        <ul>
+          <li data-paso="1">¿En qué línea se separan entrenamiento y prueba?</li>
+          <li data-paso="2">¿Qué filas vio el modelo al elegir las 20 variables?</li>
+          <li data-paso="3">¿Es creíble el resultado?</li>
+        </ul>
+      </div>
+    </div>
+    <p class="nota">Notebook, sección 4.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Su código, y un 93 % sospechoso</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.3fr 1fr">
+      <pre class="compacto"><code><span class="clave">X_sel = SelectKBest(f_classif, k=20)
+        .fit_transform(X, y)   # todas las filas</span>
+puntajes = cross_val_score(
+    LogisticRegression(max_iter=1000),
+    X_sel, y, cv=5)
+puntajes.mean()</code></pre>
+      <div>
+        <p class="resultado" style="font-family: var(--f-codigo); font-size: calc(var(--u) * 9); color: var(--acento); font-weight: 600" data-paso="1">0,93</p>
+        <p data-paso="2"><strong>Truco del docente:</strong> los datos son ruido puro. Las etiquetas se sortearon, 50 y 50. Ningún modelo honesto puede pasar mucho del 50 %.</p>
+      </div>
+    </div>
+    <ul class="ideas compactas">
+      <li data-paso="3"><span><code>SelectKBest</code> eligió las 20 columnas que mejor separan las clases <strong>usando las 100 filas</strong>, también las que después hacen de prueba. Con 5000 columnas de ruido, alguna coincide por azar con las etiquetas: la prueba ya estaba «vista».</span></li>
+    </ul>
+  </section>
+
+  <section class="diapositiva">
+    <h2>La versión honesta</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1.3fr 1fr">
+      <pre class="compacto"><code><span class="clave">modelo = make_pipeline(
+    SelectKBest(f_classif, k=20),
+    LogisticRegression(max_iter=1000))</span>
+puntajes = cross_val_score(
+    modelo, X, y, cv=5)
+puntajes.mean()</code></pre>
+      <table class="tabla">
+        <thead><tr><th>Versión</th><th>Exactitud</th></tr></thead>
+        <tbody>
+          <tr><td>De la IA</td><td class="resultado">0,93</td></tr>
+          <tr data-paso="1"><td>Con pipeline</td><td class="resultado">0,54</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="ideas compactas">
+      <li data-paso="1"><span>El pipeline repite la selección en cada pliegue, solo con las filas de entrenamiento. El resultado vuelve a lo que corresponde al azar.</span></li>
+      <li data-paso="2"><span><strong>Regla:</strong> todo lo que aprende de los datos (<code>fit</code>) va después de separar y solo con entrenamiento. Vale para elegir variables, imputar y escalar con <code>MinMaxScaler</code>.</span></li>
+    </ul>
+  </section>
+
+  <!-- ============ BLOQUE 4 · PREVENIR Y APRENDIZAJE AUTÓNOMO 2 ============ -->
+
+  <section class="diapositiva bloque" data-bloque="4">
+    <span class="numero">4</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Cómo prevenir el sobreajuste, elegir K sin trampa y el Aprendizaje Autónomo 2 en detalle.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Cómo prevenir el sobreajuste</h2>
+    <table class="tabla">
+      <thead><tr><th>Técnica</th><th>Qué hace</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Más datos</strong></td><td>con pocos datos, un modelo complejo memoriza; con más, generaliza</td></tr>
+        <tr><td><strong>Aumento de datos</strong></td><td>genera ejemplos nuevos de imágenes: girar, recortar, cambiar el brillo</td></tr>
+        <tr><td><strong>Selección de características</strong></td><td>quita variables irrelevantes, que inducen patrones falsos</td></tr>
+        <tr><td><strong>Poda</strong></td><td>limita el árbol antes (<code>max_depth</code>) o recorta ramas después de entrenar (pospoda)</td></tr>
+        <tr><td><strong>Regularización L1 y L2</strong></td><td>penaliza los pesos grandes. L2 (Ridge) evita que crezcan demasiado; L1 (Lasso) puede dejarlos en cero</td></tr>
+        <tr><td><strong><em>Dropout</em></strong></td><td>en redes neuronales, apaga neuronas al azar en cada paso para que no dependa de unas pocas</td></tr>
+        <tr><td><strong>Validación cruzada</strong></td><td>no previene: <strong>detecta</strong> el sobreajuste y ayuda a elegir hiperparámetros</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Elegir K de KNN sin hacer trampa</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1fr 1fr">
+      <table class="tabla">
+        <thead><tr><th>K vecinos</th><th>Media en validación</th></tr></thead>
+        <tbody>
+          <tr data-paso="1"><td>1</td><td class="resultado">0,665</td></tr>
+          <tr data-paso="1"><td>5</td><td class="resultado">0,694</td></tr>
+          <tr data-paso="1"><td>15</td><td class="resultado">0,726</td></tr>
+          <tr data-paso="1"><td>31</td><td class="resultado">0,729</td></tr>
+          <tr data-paso="1"><td>51</td><td class="resultado">0,735</td></tr>
+          <tr data-paso="1"><td>101</td><td class="resultado">0,728</td></tr>
+        </tbody>
+      </table>
+      <ul class="ideas compactas">
+        <li data-paso="1"><span><strong>1.</strong> Se separa la prueba y no se toca.</span></li>
+        <li data-paso="1"><span><strong>2.</strong> K se elige con K-Fold <strong>dentro del entrenamiento</strong>, con <code>MinMaxScaler</code> dentro de un pipeline.</span></li>
+        <li data-paso="2"><span><strong>3.</strong> El K elegido se evalúa <strong>una sola vez</strong> en prueba: K = 51 da <strong>0,753</strong>.</span></li>
+      </ul>
+    </div>
+    <p class="nota">Notebook, sección 5. Es el paso 4 del Aprendizaje Autónomo 2 hecho de la forma más sólida.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Aprendizaje Autónomo 2</h2>
+    <div class="dos-columnas">
+      <div>
+        <h3>Qué entregas</h3>
+        <ul>
+          <li>Un <code>.zip</code> con el notebook ejecutado, ordenado por partes con títulos, y el PDF exportado.</li>
+          <li><strong>KNN</strong> para predecir tu variable categórica.</li>
+          <li><strong>Regresión lineal simple</strong> entre dos numéricas.</li>
+          <li>Cuatro reflexiones con <strong>tus propios resultados</strong>.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>La plataforma dice / qué hacer</h3>
+        <ul>
+          <li>«Replicar los anexos»: <strong>no existen</strong>. Sigue la guía.</li>
+          <li>«Evalúa el rendimiento»: con <strong>datos de prueba</strong>, como hoy.</li>
+          <li>«Si puedes, matriz de confusión»: inclúyela, se califica.</li>
+          <li>Es individual. Vence el <strong>domingo 6 de diciembre</strong>.</li>
+        </ul>
+        <p><a href="../ver.html?f=entregas/aa2.md">Guía completa y rúbrica</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>El orden que se califica</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1fr 1fr">
+      <div>
+        <h3>KNN</h3>
+        <ol class="ideas compactas" style="list-style: none">
+          <li data-paso="1"><span>Variables: tu categórica como <code>y</code>, dos o más numéricas como <code>X</code>; trata los faltantes.</span></li>
+          <li data-paso="2"><span><code>train_test_split</code> con <code>test_size=0.25</code>.</span></li>
+          <li data-paso="3"><span><code>MinMaxScaler</code>: <code>fit</code> solo con entrenamiento.</span></li>
+          <li data-paso="4"><span>Prueba varios <code>k</code> y justifica el elegido.</span></li>
+          <li data-paso="5"><span>Exactitud y matriz de confusión en prueba; dispersión coloreada por clase.</span></li>
+        </ol>
+      </div>
+      <div data-paso="6">
+        <h3>Regresión lineal simple</h3>
+        <ul class="ideas compactas">
+          <li><span><code>X</code> con dos dimensiones: <code>df[["x"]]</code>, no <code>df["x"]</code>.</span></li>
+          <li><span>Ecuación con <code>coef_</code> e <code>intercept_</code>, R² y correlación.</span></li>
+          <li><span><code>regplot</code> con un párrafo: ¿se ve lineal? ¿Qué significa tu R²? (semana 5).</span></li>
+        </ul>
+        <p class="nota" style="margin-top: 0.8em">Guarda las predicciones: la Evaluación en Contacto con el Docente las usa.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Errores frecuentes del Aprendizaje Autónomo 1</h2>
+    <table class="tabla" style="font-size: calc(var(--u) * 2.8)">
+      <thead><tr><th>Error</th><th>Qué pasa</th><th>Cómo se corrige</th></tr></thead>
+      <tbody>
+        <tr><td><code>df["a", "b"]</code></td><td><code>KeyError</code></td><td>una lista: <code>df[["a", "b"]]</code></td></tr>
+        <tr><td><code>df[df.a &gt; 5 &amp; df.b &lt; 3]</code></td><td><code>ValueError</code>: <code>&amp;</code> se evalúa antes que <code>&gt;</code></td><td>paréntesis: <code>(df.a &gt; 5) &amp; (df.b &lt; 3)</code></td></tr>
+        <tr><td><code>df.iloc[0:3]</code> creyendo que trae 4 filas</td><td>el final no se incluye</td><td>trae las posiciones 0, 1 y 2</td></tr>
+        <tr><td>falta <code>describe()</code> o el párrafo del dataset</td><td>se pierde puntaje en exploración</td><td>exploración completa e interpretada</td></tr>
+        <tr><td>respuestas copiadas de una definición</td><td>«Bueno» como máximo</td><td>ejemplos con tus columnas</td></tr>
+        <tr><td>celdas sin ejecutar o con errores</td><td>el notebook no corre</td><td><em>Reiniciar y ejecutar todo</em></td></tr>
+      </tbody>
+    </table>
+    <p class="nota">Retroalimentación general, sin nombres. Corrige tu Aprendizaje Autónomo 1 con estas notas: va como anexo en la Evaluación en Contacto con el Docente.</p>
+  </section>
+
+  <!-- ============ BLOQUE 5 · CIERRE ============ -->
+
+  <section class="diapositiva bloque" data-bloque="5">
+    <span class="numero">5</span>
+    <div class="bloque-texto">
+      <h2></h2>
+      <p class="minutos"></p>
+      <p>Clasificar imágenes, repaso de la semana y el tutor de la semana 5.</p>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Clasificar imágenes, con y sin etiquetas</h2>
+    <table class="tabla">
+      <thead><tr><th></th><th>Algoritmo</th><th>Idea</th></tr></thead>
+      <tbody>
+        <tr><td rowspan="3"><strong>Supervisada</strong><br>(píxeles etiquetados: bosque, agua, ciudad)</td><td>Máxima verosimilitud (MLC)</td><td>describe cada clase con estadísticas (media y covarianza) y asigna cada píxel a la clase más probable</td></tr>
+        <tr><td>SVM</td><td>separa las clases en espacios de muchas dimensiones</td></tr>
+        <tr><td>Redes convolucionales (CNN)</td><td>aprenden filtros de bordes y texturas; en algunas tareas igualan o superan a una persona, pero piden muchos datos y GPU, y también se sobreajustan</td></tr>
+        <tr><td rowspan="2"><strong>No supervisada</strong><br>(sin etiquetas)</td><td>K-Means</td><td>agrupa los píxeles en K grupos fijados de antemano</td></tr>
+        <tr><td>ISODATA</td><td>como K-Means, pero divide y fusiona grupos: el número de grupos cambia mientras agrupa</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Repaso: lo que debes poder explicar</h2>
+    <div class="dos-columnas" style="grid-template-columns: 1fr 1fr">
+      <ul class="ideas compactas">
+        <li><span>Subajuste: no capta los patrones; alto sesgo y baja varianza.</span></li>
+        <li><span>Sobreajuste: alto en entrenamiento y bajo en prueba; modelo complejo para pocos datos.</span></li>
+        <li><span>Variables irrelevantes favorecen el sobreajuste; seleccionar características ayuda.</span></li>
+        <li><span>K-Fold detecta el sobreajuste y da estimaciones más fiables; cuesta K entrenamientos; K bajo, más sesgo.</span></li>
+      </ul>
+      <ul class="ideas compactas">
+        <li><span>Prevenir: poda (también después de entrenar), L2 contra pesos grandes, <em>dropout</em>, aumento de datos.</span></li>
+        <li><span>Supervisada: datos etiquetados (MLC, SVM, CNN). Sin etiquetas: K-Means e ISODATA.</span></li>
+        <li><span>ISODATA cambia el número de grupos; MLC usa medidas estadísticas de cada clase.</span></li>
+        <li><span>CNN: en algunas tareas, precisión similar a la humana, con muchos datos.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Cómo usar el tutor</h2>
+    <ol>
+      <li>Abre el sitio del curso y pulsa <strong>Copiar tutor</strong> en la semana 5. También puedes <a href="../ver.html?f=semana-05/tutor.md">abrirlo aquí</a>.</li>
+      <li>Pégalo completo en ChatGPT, Gemini o Claude (sirve la versión gratuita).</li>
+      <li>Conversa 20–30 minutos. Te hará preguntas y no te dará respuestas.</li>
+      <li>Al final, envía tu ticket de entrada en el <a href="https://forms.cloud.microsoft/r/JaPVYC1zKA">formulario de tickets</a> hasta las 12:00 del jueves 26 de noviembre.</li>
+    </ol>
+    <p class="nota">Si tienes poco tiempo, escribe RÁPIDO al empezar: irá directo a las preguntas de control.</p>
+  </section>
+
+  <section class="diapositiva">
+    <h2>Antes de irnos</h2>
+    <ul class="cierre-lista">
+      <li><span class="que">Este domingo, 22 nov</span><span>Aprendizaje Práctico de la semana 4.</span></li>
+      <li><span class="que">Aprendizaje Autónomo 2</span><span>Vence el domingo 6 de diciembre. Empieza ya: separa, escala con entrenamiento, elige K con validación y evalúa en prueba.</span></li>
+      <li><span class="que">Si ves la grabación</span><span>Ejecuta el <a href="https://colab.research.google.com/github/carlosandresat/uide-big-data-online/blob/main/semana-04/ejemplos/validacion-vinos.ipynb">notebook de validación</a> en Colab y resuelve su sección 6: K-Fold con K = 2, 5, 10 y 20, la fuga con 50 columnas y los mismos pasos con tu dataset.</span></li>
+      <li><span class="que">Próxima semana</span><span>Regresión y <em>clustering</em>, el jueves 26 de noviembre. Explicaré la Evaluación en Contacto con el Docente. Antes, usa el <a href="../ver.html?f=semana-05/tutor.md">tutor de la semana 5</a>.</span></li>
+    </ul>
+  </section>
+
+</main>
+<script src="../assets/presentacion.js"></script>
+<script src="anim-kfold.js"></script>
+</body>
+</html>
